@@ -1,0 +1,9 @@
+@media (min-width: 820px) and (orientation: landscape) {
+    .input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control, .input-group>.form-control-plaintext {
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        width: 500px !important;
+        margin-bottom: 0;
+    }
+}
