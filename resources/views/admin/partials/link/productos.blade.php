@@ -1,6 +1,6 @@
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-circle"></i>
+<li class="nav-item has-treeview {{ setActivarMenu('admin/productos*') }}">
+    <a href="#" class="nav-link {{ setActivarLink('admin/productos*') }}">
+        <i class="fas fa-box-open"></i>
         <p>
             Productos
             <i class="right fas fa-angle-left"></i>
@@ -8,13 +8,13 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('admin.productos.create') }}" class="nav-link">
+            <a href="{{ route('admin.productos.create') }}" class="nav-link {{ setActivarLink('admin/productos/create') }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Crear</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('admin.productos.index') }}" class="nav-link">
+            <a href="{{ route('admin.productos.index') }}" class="nav-link {{ setActivarLink('admin/productos') }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
                     Listar

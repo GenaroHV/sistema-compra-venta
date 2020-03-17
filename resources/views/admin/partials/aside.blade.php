@@ -10,18 +10,25 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-        <img src="{{ url('/') . '/'. Auth::user()->avatar }}" class="img-circle elevation-2" alt="User Image">
+          @if(Auth::user()->avatar != null)
+              <img class="img-circle elevation-2" alt="{{ Auth::user()->name }}" src="/storage/{{ Auth::user()->avatar }}">
+          @else
+              <img class="img-circle elevation-2" alt="{{ Auth::user()->name }}" src="{{ asset('img/users/user-default.png') }}">
+          @endif
         </div>
         <div class="info">
-        <a href="#" class="d-block">{{ Auth::user()->name}}</a>
+        <a href="{{ url('/admin/users') }}" class="d-block">{{ Auth::user()->name}}</a>
         </div>
       </div>
       <!-- Sidebar Menu -->
+      @php
+      
+      @endphp
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ url('/admin') }}" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
+            <a href="{{ url('/admin') }}" class="nav-link {{ setActivarLink('admin') }}">
+              <i class="fas fa-home"></i>
               <p>Panel Principal</p>
             </a>
           </li>

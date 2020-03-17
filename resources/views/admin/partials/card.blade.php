@@ -6,7 +6,7 @@
                 <p>Categorías</p>
             </div>
             <div class="icon">
-                <i class="ion ion-bag"></i>
+                <i class="fas fa-tags"></i>
             </div>
             <a href="{{ route('admin.categorias.index') }}" class="small-box-footer">Leer más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -18,7 +18,7 @@
                 <p>Productos</p>
             </div>
             <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="fas fa-box-open"></i>
             </div>
             <a href="{{ route('admin.productos.index') }}" class="small-box-footer">Leer más <i class="fas fa-arrow-circle-right"></i></a>
         </div>

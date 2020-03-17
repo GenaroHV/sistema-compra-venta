@@ -1,6 +1,6 @@
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-circle"></i>
+<li class="nav-item has-treeview {{ setActivarMenu('admin/proveedores*') }}">
+    <a href="#" class="nav-link {{ setActivarLink('admin/proveedores*') }}">
+        <i class="fas fa-shipping-fast"></i>
         <p>
             Proveedores
             <i class="right fas fa-angle-left"></i>
@@ -8,13 +8,13 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('admin.proveedores.create') }}" class="nav-link">
+            <a href="{{ route('admin.proveedores.create') }}" class="nav-link {{ setActivarLink('admin/proveedores/create') }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Crear</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('admin.proveedores.index') }}" class="nav-link">
+            <a href="{{ route('admin.proveedores.index') }}" class="nav-link {{ setActivarLink('admin/proveedores') }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Listar</p>
             </a>

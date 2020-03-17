@@ -26,7 +26,7 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="codigo">Código</label>
-                  <input type="text" class="form-control" name="codigo" value="{{ old('nombre', $producto->codigo)}}">
+                  <input type="text" class="form-control" name="codigo" value="{{ old('nombre', $producto->codigo) }}">
                 </div>
                 <div class="form-group">
                   <label for="nombre">Nombre</label>

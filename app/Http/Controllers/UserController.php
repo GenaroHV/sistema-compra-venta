@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use App\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Requests\UserUpdateRequest;
+
 class UserController extends Controller
 {
     public function index()
     {
-        $usuarios = User::all();
-        return view('admin.usuarios.index', compact('usuarios'));
+        $users = User::all();
+        return view('admin.usuarios.index', compact('users'));
     }
 
     public function create()
@@ -44,7 +46,7 @@ class UserController extends Controller
             $user->givePermissionTo($request->permissions);
         }
        // Regresamos al usuario
-       return redirect()->route('admin.usuarios.index')->withFlash('Usuario creado con éxito');
+       return redirect()->route('admin.users.index')->withFlash('Usuario creado con éxito');
     }
 
     public function show($id)
@@ -53,16 +55,16 @@ class UserController extends Controller
         return view('admin.usuarios.show', compact('user'));
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::findOrFail($id);
+        #$user = User::findOrFail($id);
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
         #$this->authorize('update', $usuario);
-        return view('admin.usuarios.edit', compact('user'));
+        return view('admin.usuarios.edit', compact('user', 'roles','permissions'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
         #$this->authorize('update', $user);
@@ -71,7 +73,7 @@ class UserController extends Controller
         }
         
         $user->update($request->validated());
-        return redirect()->route('admin.usuarios.edit', $user)->withFlash('Usuario actualizado con éxito');
+        return redirect()->route('admin.users.edit', $user)->withFlash('Usuario actualizado');
     }
 
     public function destroy($id)
@@ -79,6 +81,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         #$this->authorize('delete', $user);
         $user->delete();
-        return redirect()->route('admin.usuarios.index')->withFlash('Usuario eliminado con éxito');
+        return redirect()->route('admin.users.index')->withFlash('Usuario eliminado con éxito');
     }
 }

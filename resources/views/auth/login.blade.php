@@ -2,7 +2,7 @@
 @section('content')
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{ url('/') }}"><b>Sistema</b> Inventario</a>
+    <a href="{{ url('/') }}"><b>JUGUETERIA</b> SAJHOM</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -12,15 +12,15 @@
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="input-group mb-3">
-          <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Correo" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-          @error('email')
+          <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" placeholder="Usuario" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+          @error('username')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
           @enderror
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>

@@ -29,21 +29,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                              @foreach ($usuarios as $usuario)
+                              @foreach ($users as $user)
                               <tr>
-                                <td>{{ $usuario->id }}</td>
-                                <td>{{ $usuario->name }}</td>
-                                <td>{{ $usuario->email }}</td>
-                                <td>{{ $usuario->getRoleNames()->implode(', ') }}</td>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                                 <td align="center">
-                                  <a href="{{ route('admin.usuarios.show', $usuario->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
+                                  <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
                                     <i class="fas fa-eye fa-sm"></i>
                                   </a>
-                                  <a href="{{ route('admin.usuarios.edit', $usuario->id) }}" class="btn btn-success rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
+                                  <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-success rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
                                     <i class="fas fa-pencil-alt fa-sm"></i>
                                   </a>
-                                  <form action="{{ route('admin.usuarios.destroy', $usuario) }}" method="POST" style="display: inline">
-                                    @csrf {{ method_field('DELETE') }}
+                                  <form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display: inline">
+                                    @csrf @method('DELETE')
                                     <button class="btn btn-danger rounded-circle" id="deleteButton" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
                                       <i class="fas fa-trash-alt fa-sm"></i>
                                     </button>

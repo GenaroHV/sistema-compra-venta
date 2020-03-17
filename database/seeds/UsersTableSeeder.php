@@ -28,17 +28,17 @@ class UsersTableSeeder extends Seeder
 
         $admin = new User;
         $admin->name = "Genaro Hernández";
-        $admin->email = "genaro@mail.com";
-        $admin->password = bcrypt('654321');
-        $admin->avatar = "img/users/administrador.jpg";
+        $admin->username = "genaro.hernandez";
+        $admin->email = "genaro@mail.com";        
+        $admin->password = '654321';
         $admin->save();
         $admin->assignRole($administradorRole);
         
         $vendedor = new User;
         $vendedor->name = "Jhordy Benites";
+        $vendedor->username = "jhordy.benites";
         $vendedor->email = "jhordy@mail.com";
-        $vendedor->password = bcrypt('123456');
-        $vendedor->avatar = "img/users/user-default.png";
+        $vendedor->password = '123456';
         $vendedor->save();
         $vendedor->assignRole($administradorRole);
 

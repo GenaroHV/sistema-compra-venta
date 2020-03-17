@@ -24,9 +24,17 @@ Route::group([
 ],
     function(){
         Route::get('/', 'AdminController@index');
-        Route::resource('categorias', 'CategoriaController', ['except' => 'show']);
-        Route::resource('usuarios', 'UserController');
+        Route::resource('users', 'UserController');
+        // Roles
+        Route::resource('roles', 'RolesController')->except(['show']);
+        // Permisos
+        Route::resource('permissions', 'PermissionsController')->only(['index', 'edit', 'update']);
+        // Actualizar Roles de Usuario y Permisos de Usuario
+        Route::middleware('role:Administrador')->put('users/{user}/roles', 'UsersRolesController@update')->name('users.roles.update');
+        Route::middleware('role:Administrador')->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('users.permissions.update');
+        
 
+        Route::resource('categorias', 'CategoriaController', ['except' => 'show']);
         Route::resource('productos', 'ProductoController');
         Route::get('productos/incrementar/{id}', 'ProductoController@incrementar')->name('productos.incrementar');
         Route::put('productos/incrementar/{id}', 'ProductoController@actualizarIncremento')->name('productos.incrementar');
