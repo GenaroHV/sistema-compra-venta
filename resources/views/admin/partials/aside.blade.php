@@ -3,7 +3,7 @@
     <a href="{{ url('/admin') }}" class="brand-link">
     <img src="{{ asset('img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">SISCOVEN</span>
+      <span class="brand-text font-weight-light">SAJHOM</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -11,13 +11,17 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           @if(Auth::user()->avatar != null)
-              <img class="img-circle elevation-2" alt="{{ Auth::user()->name }}" src="/storage/{{ Auth::user()->avatar }}">
+              <img class="user-image img-circle elevation-2" alt="{{ Auth::user()->name }}" src="/storage/{{ Auth::user()->avatar }}">
           @else
-              <img class="img-circle elevation-2" alt="{{ Auth::user()->name }}" src="{{ asset('img/users/user-default.png') }}">
+              <img class="user-image img-circle elevation-2" alt="{{ Auth::user()->name }}" src="{{ asset('img/users/user-default.png') }}">
           @endif
         </div>
         <div class="info">
-        <a href="{{ url('/admin/users') }}" class="d-block">{{ Auth::user()->name}}</a>
+          @role('Administrador')
+            <a href="{{ url('/admin/users') }}" class="d-block">{{ Auth::user()->name}}</a>
+          @else
+            <a href="{{ route('admin.users.show', auth()->user()) }}" class="d-block">{{ Auth::user()->name}}</a>
+          @endrole
         </div>
       </div>
       <!-- Sidebar Menu -->

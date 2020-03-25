@@ -27,13 +27,13 @@
                         <div class="card-body">
                           <div class="tab-content">
                             <div class="tab-pane active" id="usuario">
-                                @include('admin.usuarios.formusuario')
+                                @include('admin.usuarios.edit.formusuario')
                             </div>                                    
                             <div class="tab-pane" id="rol">
-                                @include('admin.usuarios.formrol')
+                                @include('admin.usuarios.edit.formrol')
                             </div>
                             <div class="tab-pane" id="permiso">
-                                @include('admin.usuarios.formpermiso')
+                                @include('admin.usuarios.edit.formpermiso')
                             </div>
                           </div>                          
                         </div>

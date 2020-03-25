@@ -17,6 +17,7 @@ class RolesController extends Controller
     public function create()
     {
         #$this->authorize('create', $role = new Role);
+        $role = new Role;
         return view('admin.roles.create', [
             'role' => $role,
             'permissions' => Permission::pluck('name', 'id')            
@@ -28,12 +29,10 @@ class RolesController extends Controller
         #$this->authorize('create', new Role);
         $data = $request->validate([
             'name' => 'required|unique:roles',
-            'display_name' => 'required',
             'guard_name' => 'required'
         ],[
-            'name.required' => 'El campo identificador es obligatorio',
-            'name.unique' => 'Este identificador ya ha sido registrado',
-            'display_name.required' => 'El campo nombre es obligatorio',
+            'name.required' => 'El campo nombre es obligatorio',
+            'name.unique' => 'Este nombre ya ha sido registrado',
             'guard_name.required' => 'El campo nombre de guardia es obligatorio'
         ]);
 
@@ -59,10 +58,10 @@ class RolesController extends Controller
     {
         #$this->authorize('update', $role);
         $data = $request->validate([
-            'display_name' => 'required',
+            //'name' => 'required',
             'guard_name' => 'required'
         ],[
-            'display_name.required' => 'El campo nombre es obligatorio',
+            //'name.required' => 'El campo nombre es obligatorio',
             'guard_name.required' => 'El campo nombre de guardia es obligatorio'
         ]);
 

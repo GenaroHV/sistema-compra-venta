@@ -30,6 +30,7 @@ class UserController extends Controller
         #$this->authorize('create', new User);
         # Validamos
         $data = $request->validate([
+            'username' => 'required|unique:users',
             'name'  =>  'required|max:255',
             'email' =>  'required|email|max:255|unique:users'
         ]);

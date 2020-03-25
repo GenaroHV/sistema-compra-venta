@@ -1,61 +1,57 @@
-@extends('layouts.template-admin')
+@extends('layouts.app')
 @section('titulo', 'Listado de Permisos')
-@section('header')
-  <li class="breadcrumb-item"><a href="{{ url('admin') }}"><i class="fas fa-home"></i></a></li>
-  <li class="breadcrumb-item"><a href="{{ route('admin.permissions.index') }}">Permisos</a></li>
-  <li class="breadcrumb-item active" aria-current="page">Listado de permisos</li>
-@stop()
 @section('content')
-  <div class="container-fluid mt--6">
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-8">
-                  <h2 class="mb-0">Lista de Permisos</h2>
-                  <p class="text-sm mb-0">
-                    En esta sección puedes ver, editar, eliminar y buscar los permisos que creas conveniente.
-                  </p>
-                </div>
+<div class="content-wrapper">
+  <div class="content-header">
+      <div class="container-fluid">
+          <div class="row mb-2">
+              <div class="col-6 ml-auto mr-auto">
+                  <h1 class="m-0 text-dark text-center">Lista de Permisos</h1>
               </div>
-            </div>
-            <div class=" table-responsive py-4">
-              <table id="table-posts" class="table table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th>ID</th>
-                    <th>Identificador</th>
-                    <th>Nombre</th>
-                    <th>Guard</th>
-                    @if( Auth::user()->hasPermissionTo('Editar permiso') || Auth::user()->hasRole('Administrador'))
-                    <th>Acciones</th>
-                    @endif
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($permissions as $permission)
-                  <tr>
-                    <td>{{ $permission->id }}</td>
-                    <td>{{ $permission->name}}</td>     
-                    <td>{{ $permission->display_name}}</td>      
-                    <td>{{ $permission->guard_name }}</td>
-                    <td>      
-                        @if( Auth::user()->hasPermissionTo('Editar permiso') || Auth::user()->hasRole('Administrador'))                 
-                        <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
-                            <i class="fas fa-pencil-alt fa-sm"></i>
-                        </a>
-                        @endif
-                    </td>
-                  </tr>
-                  @endforeach
-              </table>
-            </div>
           </div>
+      </div>
+  </div>
+  <section class="content">
+    <div class="container-fluid">         
+        <div class="row">
+            <div class="col-12 col-md-9 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-body">
+                      <div class=" table-responsive py-4">
+                        <table id="table-posts" class="table table-flush">
+                          <thead class="thead-light">
+                            <tr>
+                              <th>ID</th>
+                              <th>Nombre</th>
+                              <th>Guard</th>                    
+                              <th>Acciones</th>
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($permissions as $permission)
+                            <tr>
+                              <td>{{ $permission->id }}</td>
+                              <td>{{ $permission->name}}</td>        
+                              <td>{{ $permission->guard_name }}</td>
+                              <td>      
+                                  
+                                  <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
+                                      <i class="fas fa-pencil-alt fa-sm"></i>
+                                  </a>
+                                  
+                              </td>
+                            </tr>
+                            @endforeach
+                        </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
-      @include('admin.partials.footer')
-  </div>
+  </section>
+</div>
 @endsection
 @push('css')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.css">
