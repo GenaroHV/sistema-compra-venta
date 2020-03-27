@@ -34,15 +34,17 @@ class ProductoController extends Controller
             'codigo' => 'required',
             'nombre' => 'required|max:255',
             'descripcion' => 'required',
-            'precio' => 'required',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'precio' => 'required'            
         ]);
 
         $producto = new Product;
         $producto->codigo = $request->get('codigo');
         $producto->nombre = $request->get('nombre');
         $producto->precio = $request->get('precio');
-        $producto->avatar = $request->file('avatar')->store('img/productos','public');
+        if($request->file('avatar') !== null){
+            $producto->avatar = optional($request->file('avatar'))->store('img/productos','public');
+        }
+        #$producto->avatar = $request->file('avatar')->store('img/productos','public');
         $producto->descripcion = $request->get('descripcion');
         $producto->save();
         $producto->categorias()->sync($request->get('categorias'));
@@ -84,14 +86,14 @@ class ProductoController extends Controller
         $producto->delete();
         return redirect()->route('admin.productos.index')->with('flash', 'Producto eliminado con éxito');
     }
-
-    # Ir a formulario de incremento
+/*
+     Ir a formulario de incremento
     public function incrementar($id){
         $producto = Product::findOrFail($id);
         return view('admin.productos.incrementar', compact('producto'));
     }
 
-    # Grabar los datos del formulario de incremento
+     Grabar los datos del formulario de incremento
     public function actualizarIncremento(Request $request, $id)
     {
         $datos=$request->all();
@@ -107,13 +109,13 @@ class ProductoController extends Controller
         return redirect(route('admin.productos.index'))->with('flash', 'Stock incrementado con éxito');
     }
 
-    # Ir a formulario de incremento
+     Ir a formulario de incremento
     public function disminuir($id){
         $producto = Product::findOrFail($id);
         return view('admin.productos.disminuir', compact('producto'));
     }
 
-    # Grabar los datos del formulario de incremento
+     Grabar los datos del formulario de incremento
     public function actualizarDisminucion(Request $request, $id)
     {
         $datos=$request->all();
@@ -134,5 +136,5 @@ class ProductoController extends Controller
         }
     }
 
-
+*/
 }

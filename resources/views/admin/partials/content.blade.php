@@ -5,4 +5,4 @@
         @include('admin.partials.card')
       </div>
     </section>
-  </div>
+</div>

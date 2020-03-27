@@ -53,14 +53,6 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control" name="email" placeholder="Ingresar email">
                 </div>
-                <div class="form-group">
-                    <label for="contacto">Contacto</label>
-                    <input type="text" class="form-control" name="contacto" placeholder="Ingresar contacto">
-                </div>
-                <div class="form-group">
-                    <label for="telefono_contacto">Teléfono  contacto</label>
-                    <input type="text" class="form-control" name="telefono_contacto" placeholder="Ingresar teléfono de contacto">
-                </div>
               </div>
               <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">Crear</button>

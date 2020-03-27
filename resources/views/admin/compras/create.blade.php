@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('titulo', 'Crear Ingreso')
+@section('titulo', 'Crear Compra')
 @section('content')
 <div class="content-wrapper">
   <div class="content-header">
       <div class="container-fluid">
           <div class="row mb-2">
               <div class="col-6 ml-auto mr-auto">
-                  <h1 class="m-0 text-dark text-center">Crear Ingreso</h1>
+                  <h1 class="m-0 text-dark text-center">Crear Compra</h1>
               </div>
           </div>
       </div>
@@ -20,29 +20,25 @@
             <div class="card-header">
               <h3 class="card-title">Ingresar los datos</h3>
             </div>
-            <form role="form" action="{{ route('admin.ingresos.store') }}" method="POST">
+            <form role="form" action="{{ route('admin.compras.store') }}" method="POST">
               @csrf @method('POST')
               <div class="card-body row">
-                <div class="form-group col-12 col-md-8">
-                  <label for="proveedor_id">Proveedor</label>
-                  <select name="proveedor_id" class="form-control js-example-basic-single">
-                    <option value="" disabled selected hidden>Seleccione un proveedor</option>
-                    @foreach ($personas as $persona)
-                        <option value="{{$persona->id}}">{{ $persona->nombre }}</option>
-                    @endforeach                              
-                  </select>                  
-                </div>
-                <div class="form-group col-12 col-md-4">
-                    <label for="impuesto">Impuesto</label>
-                    <input type="text" class="form-control" name="impuesto" placeholder="0.18">
+                <div class="form-group col-12 col-md-12">
+                    <label for="proveedor_id">Proveedor</label>
+                    <select name="proveedor_id" class="form-control js-example-basic-single">
+                      <option value="" disabled selected hidden>Seleccione un proveedor</option>
+                      @foreach ($proveedores as $proveedor)
+                        <option value="{{$proveedor->id}}">{{ $proveedor->nombre }}</option>
+                      @endforeach                              
+                    </select>                  
                 </div>
                 <div class="form-group col-12 col-md-4">
                     <label for="tipo_comprobante">Tipo de comprobante</label>
                     <select name="tipo_comprobante" class="form-control">
-                        <option value="" disabled selected hidden>Seleccione tipo de comprobante</option>
-                        <option value="Boleta">Boleta</option>
-                        <option value="Factura">Factura</option>
-                        <option value="Tikect">Tikect</option>
+                        <option value="" disabled selected hidden>Seleccione una opción</option>                        
+                        @foreach($tipo_comprobante as $item)
+                          <option value="{{ $item }}"> {{ strtoupper($item) }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-12 col-md-4">
@@ -59,9 +55,9 @@
                       <label for="producto_id">Producto</label>
                       <select name="for_producto_id" id="for_producto_id" class="form-control js-example-basic-single">
                         <option value="" disabled selected hidden>Seleccione un producto</option>
-                        @foreach ($productos as $producto)
-                            <option value="{{$producto->id}}">{{ $producto->nombre }}</option>
-                        @endforeach                              
+                          @foreach ($productos as $producto)
+                              <option value="{{$producto->id}}">{{ $producto->nombre }}</option>
+                          @endforeach                              
                       </select>  
                     </div>
                     <div class="form-group col-12 col-md-3">
@@ -82,18 +78,26 @@
                         <table id="detalles" class="table">
                           <thead class="table-dark">
                             <tr>
+                              <th scope="col">Opciones</th>
                               <th scope="col">Producto</th>
                               <th scope="col">Cantidad</th>
                               <th scope="col">Precio</th>
-                              <th scope="col">Subtotal</th>
-                              <th scope="col">Opciones</th>
+                              <th scope="col">Subtotal</th>                              
                             </tr>
                           </thead>
                           <tfoot>
                             <tr>
-                              <th colspan="3">TOTAL</th>
-                              <th colspan="2" id="total">S/. 0.00</th>
-                            </tr>
+                                <th  colspan="4" class="py-0"><p class="mb-0" align="right">Sub Total:</p></th>
+                                <th class="py-0"><p class="mb-0" align="right"><span id="total">S/. 0.00</span> </p></th>
+                            </tr>      
+                            <tr>
+                                <th colspan="4" class="py-0"><p class="mb-0" align="right">IGV (18%):</p></th>
+                                <th class="py-0"><p class="mb-0" align="right"><span id="total_impuesto">S/. 0.00</span></p></th>
+                            </tr>      
+                            <tr>
+                                <th colspan="4" class="py-0"><p class="mb-0" align="right">Total:</p></th>
+                                <th class="py-0"><p class="mb-0" align="right"><span align="right" id="total_pagar_html">S/. 0.00</span> <input type="hidden" name="total_pagar" id="total_pagar"></p></th>
+                            </tr> 
                           </tfoot>
                           <tbody>
                             
@@ -157,22 +161,23 @@
     $("#guardar").hide();
 
     function agregar(){
-      prodcuto_id = $("#for_producto_id").val();
+      producto_id = $("#for_producto_id").val();
       producto = $("#for_producto_id option:selected").text();
       cantidad = $("#for_cantidad").val();
       precio = $("#for_precio").val();
+      impuesto = 0.18;
 
-      if( prodcuto_id != "" && cantidad != "" && cantidad>0 && precio != ""){
+      if( producto_id != "" && cantidad != "" && cantidad>0 && precio != ""){
         subtotal[cont] = (cantidad*precio);
         total = total + subtotal[cont];
-        var fila = '<tr class="selected" id="fila' + cont +'"><td><input type="hidden" name="producto_id[]" value="'+prodcuto_id+'">'+producto+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio[]" value="'+precio+'"></td><td>'+subtotal[cont]+'</td><td><button style="padding-bottom: 0px;padding-top: 0px;padding-left: 8px;padding-right: 8px;" type="button" class="btn btn-warning rounded-circle" onclick="eliminar('+cont+');">x</button></td></tr>';
+        var fila = '<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn btn-warning rounded-circle" onclick="eliminar('+cont+');"><i class="fas fa-times"></i></button></td><td><input type="hidden" name="producto_id[]" value="'+producto_id+'">'+producto+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio[]" value="'+precio+'"></td><td>S/.'+subtotal[cont]+'</td></tr>';
         cont++;
         limpiar();
-        $("#total").html("S/. " + total);
+        totales();        
         evaluar();
         $("#detalles").append(fila);
       }else{
-        alert('error al ingresar detalle de ingreso');
+        alert('error al ingresar detalle de compra');
       }
     }
 
@@ -180,7 +185,14 @@
       $("#for_cantidad").val("");
       $("#for_precio").val("");
     }
-
+    function totales(){
+      $("#total").html("S/. " + total.toFixed(2));
+      total_impuesto=total*impuesto;
+      total_pagar=total+total_impuesto;
+      $("#total_impuesto").html("S/. " + total_impuesto.toFixed(2));
+      $("#total_pagar_html").html("S/. " + total_pagar.toFixed(2));
+      $("#total_pagar").val(total_pagar.toFixed(2));
+    }
     function evaluar(){
       if (total > 0) {
         $("#guardar").show();
@@ -190,7 +202,14 @@
     }
     function eliminar(index){
       total = total - subtotal[index];
-      $("#total").html("S/. " + total);
+      total_impuesto= total*0.18;
+      total_pagar_html = total + total_impuesto;
+
+      $("#total").html("S/." + total);
+      $("#total_impuesto").html("S/." + total_impuesto);
+      $("#total_pagar_html").html("S/." + total_pagar_html);
+      $("#total_pagar").val(total_pagar_html.toFixed(2));
+
       $("#fila" + index).remove();
       evaluar();
     }

@@ -2,22 +2,18 @@
 @section('titulo', 'Lista de Clientes')
 @section('content')
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-6 ml-auto mr-auto">
-                    <h1 class="m-0 text-dark text-center">Lista de Clientes</h1>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <section class="content">
+    <section class="content pt-3">
         <div class="container-fluid">         
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
+                      <div class="card-header pb-1">
+                        <h3 class="card-title">
+                        <b>LISTA DE CLIENTES</b>                            
+                        </h3>
+                      </div>
+                        <div class="card-body table-responsive">
                           <table id="tabla-categoria" class="table table-bordered table-striped">
                             <thead>
                             <tr>
@@ -32,20 +28,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                              @foreach ($personas as $persona)
+                              @foreach ($clientes as $cliente)
                               <tr>
-                                <td>{{ $persona->id }}</td>
-                                <td>{{ $persona->nombre }}</td>
-                                <td>{{ $persona->tipo_documento }}</td>
-                                <td>{{ $persona->numero_documento }}</td>
-                                <td>{{ $persona->direccion }}</td>
-                                <td>{{ $persona->telefono }}</td>
-                                <td>{{ $persona->email }}</td>
+                                <td>{{ $cliente->id }}</td>
+                                <td>{{ $cliente->nombre }}</td>
+                                <td>{{ $cliente->tipo_documento }}</td>
+                                <td>{{ $cliente->numero_documento }}</td>
+                                <td>{{ $cliente->direccion }}</td>
+                                <td>{{ $cliente->telefono }}</td>
+                                <td>{{ $cliente->email }}</td>
                                 <td align="center">
-                                  <a href="{{ route('admin.clientes.edit', $persona->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
+                                  <a href="{{ route('admin.clientes.edit', $cliente->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
                                     <i class="fas fa-pencil-alt fa-sm"></i>
                                   </a>
-                                  <form action="{{ route('admin.clientes.destroy', $persona) }}" method="POST" style="display: inline">
+                                  <form action="{{ route('admin.clientes.destroy', $cliente) }}" method="POST" style="display: inline">
                                     @csrf {{ method_field('DELETE') }}
                                     <button class="btn btn-danger rounded-circle" id="deleteButton" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
                                       <i class="fas fa-trash-alt fa-sm"></i>

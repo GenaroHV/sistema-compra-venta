@@ -2,34 +2,28 @@
 @section('titulo', 'Lista de Proveedores')
 @section('content')
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-6 ml-auto mr-auto">
-                    <h1 class="m-0 text-dark text-center">Lista de Proveedores</h1>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <section class="content">
+    <section class="content pt-3">
         <div class="container-fluid">         
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                          <table id="tabla-categoria" class="table table-bordered table-striped">
+                        <div class="card-header pb-1">
+                          <h3 class="card-title">
+                          <b>LISTA DE PROVEEDORES</b>                            
+                          </h3>
+                        </div>
+                        <div class="card-body table-responsive">
+                          <table id="tabla-categoria" class="table table-sm table-bordered table-striped">
                             <thead>
                             <tr>
                               <th>ID</th>
                               <th>Nombre</th>
-                              <th>Tipo de doc.</th>
-                              <th>Nro de doc.</th>
+                              <th>Tipo de documento</th>
+                              <th>Número de documento</th>
                               <th>Dirección</th>
                               <th>Teléfono</th>
                               <th>Email</th>
-                              <th>Contacto</th>
-                              <th>Teléfono contacto</th>
                               <th>Acciones</th>
                             </tr>
                             </thead>
@@ -43,8 +37,6 @@
                                 <td>{{ $proveedor->direccion }}</td>
                                 <td>{{ $proveedor->telefono }}</td>
                                 <td>{{ $proveedor->email }}</td>
-                                <td>{{ $proveedor->contacto }}</td>
-                                <td>{{ $proveedor->telefono_contacto }}</td>
                                 <td align="center">
                                   <a href="{{ route('admin.proveedores.edit', $proveedor->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
                                     <i class="fas fa-pencil-alt fa-sm"></i>
@@ -61,16 +53,14 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Tipo de doc.</th>
-                                <th>Nro de doc.</th>
-                                <th>Dirección</th>
-                                <th>Teléfono</th>
-                                <th>Email</th>
-                                <th>Contacto</th>
-                                <th>Teléfono contacto</th>
-                                <th>Acciones</th>
+                              <th>ID</th>
+                              <th>Nombre</th>
+                              <th>Tipo de documento</th>
+                              <th>Número de documento</th>
+                              <th>Dirección</th>
+                              <th>Teléfono</th>
+                              <th>Email</th>
+                              <th>Acciones</th>
                             </tr>
                             </tfoot>
                           </table>

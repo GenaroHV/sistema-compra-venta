@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-12 col-md-9 ml-auto mr-auto">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                           <table id="tabla-categoria" class="table table-bordered table-striped">
                             <thead>
                             <tr>

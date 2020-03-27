@@ -21,36 +21,36 @@
               <h3 class="card-title">Ingresar los datos</h3>
             </div>
 
-            <form role="form" action="{{ route('admin.clientes.update', $persona->id) }}" method="POST">
+            <form role="form" action="{{ route('admin.clientes.update', $cliente->id) }}" method="POST">
               @csrf @method('PUT')
               <div class="card-body">
                 <div class="form-group">
                   <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" value="{{ old('nombre', $persona->nombre)}}">
+                <input type="text" class="form-control" name="nombre" value="{{ old('nombre', $cliente->nombre)}}">
                 </div>
                 <div class="form-group">
                     <label for="tipo_documento">Tipo de documento</label>
                     <select name="tipo_documento" class="form-control">                        
-                        @foreach($doc as $item)
-                        <option value="{{ $item }}" @if($persona->tipo_documento === $item) selected='selected' @endif> {{ strtoupper($item) }}</option>
+                        @foreach($tipo_documento as $item)
+                        <option value="{{ $item }}" @if($cliente->tipo_documento === $item) selected='selected' @endif> {{ strtoupper($item) }}</option>
                         @endforeach
                     </select>                    
                 </div>
                 <div class="form-group">
                     <label for="numero_documento">Número de documento</label>
-                    <input type="text" class="form-control" name="numero_documento" value="{{ old('numero_documento', $persona->numero_documento)}}">
+                    <input type="text" class="form-control" name="numero_documento" value="{{ old('numero_documento', $cliente->numero_documento)}}">
                 </div>
                 <div class="form-group">
                     <label for="direccion">Dirección</label>
-                    <input type="text" class="form-control" name="direccion" value="{{ old('direccion', $persona->direccion)}}">
+                    <input type="text" class="form-control" name="direccion" value="{{ old('direccion', $cliente->direccion)}}">
                 </div>
                 <div class="form-group">
                     <label for="telefono">Teléfono</label>
-                    <input type="text" class="form-control" name="telefono" value="{{ old('telefono', $persona->telefono)}}">
+                    <input type="text" class="form-control" name="telefono" value="{{ old('telefono', $cliente->telefono)}}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" value="{{ old('email', $persona->email)}}">
+                    <input type="email" class="form-control" name="email" value="{{ old('email', $cliente->email)}}">
                 </div>
               </div>
               <div class="card-footer text-right">

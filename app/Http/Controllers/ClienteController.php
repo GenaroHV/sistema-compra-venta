@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Persona;
+use App\Cliente;
 class ClienteController extends Controller
 {
     public function index(){
-        $personas = Persona::where('tipo_persona', '=', 'Cliente')->get();
-        return view('admin.clientes.index', compact('personas'));
+        $clientes = Cliente::all();
+        return view('admin.clientes.index', compact('clientes'));
     }
 
     public function create(){
@@ -17,41 +17,40 @@ class ClienteController extends Controller
     }
 
     public function store(Request $request){
-        $persona = new Persona;
-        $persona->nombre = $request->get('nombre');
-        $persona->tipo_persona = 'Cliente';
-        $persona->tipo_documento = $request->get('tipo_documento');
-        $persona->numero_documento = $request->get('numero_documento');
-        $persona->direccion = $request->get('direccion');
-        $persona->telefono = $request->get('telefono');
-        $persona->email = $request->get('email');
-        $persona->save();
+        $cliente = new Cliente;
+        $cliente->nombre = $request->get('nombre');
+        $cliente->tipo_documento = $request->get('tipo_documento');
+        $cliente->numero_documento = $request->get('numero_documento');
+        $cliente->direccion = $request->get('direccion');
+        $cliente->telefono = $request->get('telefono');
+        $cliente->email = $request->get('email');
+        $cliente->save();
 
-        return redirect()->route('admin.clientes.index')->with('flash', 'Cliente creada con éxito');
+        return redirect()->route('admin.clientes.index')->with('flash', 'Cliente creado con éxito');
     }
 
     public function edit($id){
-        $doc = ['DNI', 'RUC', 'PASS'];
-        $persona = Persona::findOrFail($id);
-        return view('admin.clientes.edit', compact('persona', 'doc'));
+        $tipo_documento = ['DNI', 'RUC', 'PASS'];
+        $cliente = Cliente::findOrFail($id);
+        return view('admin.clientes.edit', compact('cliente', 'tipo_documento'));
     }
 
     public function update(Request $request, $id){
-        $persona = Persona::findOrFail($id);
-        $persona->nombre = $request->get('nombre');
-        $persona->tipo_documento = $request->get('tipo_documento');
-        $persona->numero_documento = $request->get('numero_documento');
-        $persona->direccion = $request->get('direccion');
-        $persona->telefono = $request->get('telefono');
-        $persona->email = $request->get('email');
-        $persona->save();
+        $cliente = Cliente::findOrFail($id);
+        $cliente->nombre = $request->get('nombre');
+        $cliente->tipo_documento = $request->get('tipo_documento');
+        $cliente->numero_documento = $request->get('numero_documento');
+        $cliente->direccion = $request->get('direccion');
+        $cliente->telefono = $request->get('telefono');
+        $cliente->email = $request->get('email');
+        $cliente->save();
 
         return redirect()->route('admin.clientes.index')->with('flash', 'Cliente actualizado con éxito');
     }
 
     public function destroy($id){
-        $persona = Persona::findOrFail($id);
-        $persona->delete();
+        $cliente = Cliente::findOrFail($id);
+        $cliente->delete();
         return redirect()->route('admin.clientes.index')->with('flash', 'Cliente eliminado con éxito');
     }
 }

@@ -23,30 +23,30 @@
             <a href="{{ route('admin.productos.index') }}" class="small-box-footer">Leer más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    {{--  
+
     <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
-            <div class="inner">
-                <h3>44</h3>
+            <div class="inner text-white">
+                <h3>{{ count($cliente) }}</h3>
                 <p>Clientes</p>
             </div>
             <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <i class="fas fa-user-tie"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.clientes.index') }}" class="small-box-footer" style="color: white !important;">Leer más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <div class="col-lg-3 col-6">
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>65</h3>
-                <p>Usuarios</p>
+                <h3>{{ count($proveedor) }}</h3>
+                <p>Proveedores</p>
             </div>
             <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="fas fa-shipping-fast"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin.proveedores.index') }}" class="small-box-footer">Leer más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    --}}
+  
 </div>

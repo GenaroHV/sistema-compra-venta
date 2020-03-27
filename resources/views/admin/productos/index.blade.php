@@ -18,7 +18,7 @@
                 <div class="col-12 col-md-12">
                     <div class="card">
                         <div class="card-body table-responsive">
-                          <table id="tabla-productos" class="table table-bordered table-striped">
+                          <table id="tabla-productos" class="table table-sm table-bordered table-striped">
                             <thead>
                             <tr>
                               <th>ID</th>
@@ -36,11 +36,19 @@
                               @foreach ($productos as $producto)
                               <tr>
                                 <td>{{ $producto->id }}</td>
+                                @if($producto->avatar)
                                 <td>
                                     <a href="" data-toggle="modal" data-target="#modal{{$producto->id}}">
                                         <img src="{{ asset('storage/' .$producto->avatar) }}" alt="" class="img-fluid" width="60px" height="60px">
                                     </a>
                                 </td>
+                                @else
+                                <td>
+                                  <a href="" data-toggle="modal" data-target="#modal{{$producto->id}}">
+                                      <img src="{{ asset('img/productos/default-product.png') }}" alt="" class="img-fluid border" width="60px" height="60px">
+                                  </a>
+                                </td>
+                                @endif
                                 <td class="text-uppercase">{{ $producto->codigo }}</td>
                                 <td class="text-uppercase">{{ $producto->nombre }}</td>
                                 <td>{{ $producto->stock }}</td>
@@ -52,12 +60,14 @@
                                   @endforeach
                                 </td>
                                 <td align="center">
+                                  {{--  
                                   <a href="{{ route('admin.productos.incrementar', $producto->id) }}" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Aumentar Cantidad">
                                     <i class="fas fa-sort-numeric-up"></i>
                                   </a>
                                   <a href="{{ route('admin.productos.disminuir', $producto->id) }}" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Disminuir Cantidad">
                                     <i class="fas fa-sort-numeric-down"></i>
                                   </a>
+                                  --}}
                                   <a href="{{ route('admin.productos.show', $producto->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
                                     <i class="fas fa-eye fa-sm"></i>
                                   </a>
@@ -73,6 +83,7 @@
                                 </td>
                               </tr>
                               <!-- Modal -->
+                              @if($producto->avatar)
                               <div class="modal fade" id="modal{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                       <div class="modal-content">
@@ -82,6 +93,17 @@
                                       </div>
                                   </div>
                               </div>
+                              @else
+                              <div class="modal fade" id="modal{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <img src="{{ asset('img/productos/default-product.png') }}" class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              @endif
                               @endforeach
                             </tbody>
                             <tfoot>

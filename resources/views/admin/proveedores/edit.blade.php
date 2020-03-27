@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label for="tipo_documento">Tipo de documento</label>
                     <select name="tipo_documento" class="form-control">                        
-                        @foreach($doc as $item)
+                        @foreach($tipo_documento as $item)
                         <option value="{{ $item }}" @if($proveedor->tipo_documento === $item) selected='selected' @endif> {{ strtoupper($item) }}</option>
                         @endforeach
                     </select>                    
@@ -51,14 +51,6 @@
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" name="email" value="{{ old('email', $proveedor->email)}}">
-                </div>
-                <div class="form-group">
-                    <label for="contacto">Contacto</label>
-                    <input type="text" class="form-control" name="contacto" value="{{ old('contacto', $proveedor->contacto)}}">
-                </div>
-                <div class="form-group">
-                    <label for="telefono_contacto">Teléfono  contacto</label>
-                    <input type="text" class="form-control" name="telefono_contacto" value="{{ old('telefono_contacto', $proveedor->telefono_contacto)}}">
                 </div>
               </div>
               <div class="card-footer text-right">

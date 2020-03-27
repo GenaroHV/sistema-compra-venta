@@ -17,7 +17,7 @@
           <div class="row">
               <div class="col-12 col-md-9 ml-auto mr-auto">
                   <div class="card">
-                      <div class="card-body">
+                      <div class="card-body table-responsive">
                       <table id="table-posts" class="table table-flush">
                         <thead class="thead-light">
                           <tr>

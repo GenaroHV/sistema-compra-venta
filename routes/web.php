@@ -24,6 +24,7 @@ Route::group([
 ],
     function(){
         Route::get('/', 'AdminController@index');
+        Route::get('configurar', 'AdminController@configurar');
         Route::resource('users', 'UserController');
         // Roles
         Route::resource('roles', 'RolesController')->except(['show']);
@@ -36,17 +37,17 @@ Route::group([
 
         Route::resource('categorias', 'CategoriaController', ['except' => 'show']);
         Route::resource('productos', 'ProductoController');
-        Route::get('productos/incrementar/{id}', 'ProductoController@incrementar')->name('productos.incrementar');
-        Route::put('productos/incrementar/{id}', 'ProductoController@actualizarIncremento')->name('productos.incrementar');
 
-        Route::get('productos/disminuir/{id}', 'ProductoController@disminuir')->name('productos.disminuir');
-        Route::put('productos/disminuir/{id}', 'ProductoController@actualizarDisminucion')->name('productos.disminuir');
+        #Route::get('productos/incrementar/{id}', 'ProductoController@incrementar')->name('productos.incrementar');
+        #Route::put('productos/incrementar/{id}', 'ProductoController@actualizarIncremento')->name('productos.incrementar');
+        #Route::get('productos/disminuir/{id}', 'ProductoController@disminuir')->name('productos.disminuir');
+        #Route::put('productos/disminuir/{id}', 'ProductoController@actualizarDisminucion')->name('productos.disminuir');
 
         Route::resource('clientes', 'ClienteController');
-
-        Route::resource('ingresos', 'IngresoController');
-        #Route::get('ingresos/desactivar/{id}', 'IngresoController@desactivar')->name('ingresos.desactivar');
-        Route::put('ingresos/desactivar/{id}', 'IngresoController@desactivar')->name('ingresos.desactivar');
+        Route::resource('compras', 'CompraController');
+        Route::get('compras/{id}/print', 'CompraController@print')->name('compras.print');
+        Route::get('compras/{id}/export', 'CompraController@exportPdf')->name('compras.pdf');        
+        #Route::put('compras/desactivar/{id}', 'CompraController@desactivar')->name('compras.desactivar');
         
         Route::resource('proveedores', 'ProveedorController');
         Route::resource('ventas', 'VentaController');

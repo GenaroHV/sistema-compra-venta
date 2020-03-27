@@ -36,11 +36,17 @@
               <p>Panel Principal</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ url('/admin/configurar') }}" class="nav-link {{ setActivarLink('admin/configurar') }}">
+              <i class="fas fa-users-cog"></i>
+              <p>Zona de Configuración</p>
+            </a>
+          </li>
           <li class="nav-header">ALMACEN</li>
           @include('admin.partials.link.categorias')
           @include('admin.partials.link.productos')
           <li class="nav-header">COMPRAS</li>
-          @include('admin.partials.link.ingresos')
+          @include('admin.partials.link.compras')
           @include('admin.partials.link.proveedores')
           <li class="nav-header">VENTAS</li>
           @include('admin.partials.link.ventas')

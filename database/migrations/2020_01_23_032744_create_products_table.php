@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('nombre');
             $table->double('precio');
             $table->integer('stock')->default(0);
-            $table->string('avatar')->default('img/productos/producto-default.png');
+            $table->string('avatar')->nullable();
             $table->string('descripcion');
             $table->timestamps();
         });

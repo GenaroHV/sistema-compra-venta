@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIngresosTable extends Migration
+class CreateVentasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateIngresosTable extends Migration
      */
     public function up()
     {
-        Schema::create('ingresos', function (Blueprint $table) {
+        Schema::create('ventas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tipo_comprobante');
             $table->string('serie_comprobante')->nullable();
@@ -23,12 +23,11 @@ class CreateIngresosTable extends Migration
             $table->decimal('total', 11,2);
             $table->string('estado');
 
-            $table->bigInteger('proveedor_id')->unsigned();
-            $table->foreign('proveedor_id')->references('id')->on('proveedores');
+            $table->bigInteger('cliente_id')->unsigned();
+            $table->foreign('cliente_id')->references('id')->on('clientes');
 
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');   
-                     
+            $table->foreign('user_id')->references('id')->on('users'); 
             $table->timestamps();
         });
     }
@@ -40,6 +39,6 @@ class CreateIngresosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ingresos');
+        Schema::dropIfExists('ventas');
     }
 }
