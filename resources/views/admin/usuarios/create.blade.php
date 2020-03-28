@@ -2,23 +2,18 @@
 @section('titulo', 'Crear Usuario')
 @section('content')
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-6 ml-auto mr-auto">
-                    <h1 class="m-0 text-dark text-center">Crear Usuario</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <section class="content">
+    
+    <section class="content pt-3">
         <div class="container-fluid">         
             <div class="row justify-content-center">
                 <div class="col-12 col-md-9">
                     <div class="card">
-                        <div class="card-header p-2">
-                            INFORMACIÓN DE USUARIO
-                        </div>
+                        <div class="card-header py-1">
+                            <h3 class="card-title pt-2 mb-0 pb-0">
+                              <b>CREAR USUARIO</b>
+                            </h3>                          
+                            @include('admin.partials.regresar')
+                          </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('admin.users.store') }}" enctype="multipart/form-data">
                                 @csrf

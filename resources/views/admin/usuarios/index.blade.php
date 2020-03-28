@@ -2,21 +2,22 @@
 @section('titulo', 'Lista de Usuarios')
 @section('content')
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-6 ml-auto mr-auto">
-                    <h1 class="m-0 text-dark text-center">Lista de Usuarios</h1>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <section class="content">
+    <section class="content pt-3">
         <div class="container-fluid">         
             <div class="row">
                 <div class="col-12 col-md-9 ml-auto mr-auto">
                     <div class="card">
+                        <div class="card-header py-1">
+                          <h3 class="card-title pt-2 mb-0 pb-0">
+                            <b>LISTA DE USUARIOS</b>
+                          </h3>                          
+                          <div class="float-right">
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-dark rounded-circle boton-custom" data-toggle="tooltip" data-placement="top" title="Crear usuario">
+                              <i class="fas fa-plus"></i>
+                            </a>
+                          </div>
+                        </div>
                         <div class="card-body table-responsive">
                           <table id="tabla-categoria" class="table table-bordered table-striped">
                             <thead>
@@ -36,15 +37,15 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                                 <td align="center">
-                                  <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
+                                  <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-info rounded-circle boton-custom" data-toggle="tooltip" data-placement="top" title="Ver usuario">
                                     <i class="fas fa-eye fa-sm"></i>
                                   </a>
-                                  <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-success rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
+                                  <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-success rounded-circle boton-custom" data-toggle="tooltip" data-placement="top" title="Editar usuario">
                                     <i class="fas fa-pencil-alt fa-sm"></i>
                                   </a>
                                   <form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display: inline">
                                     @csrf @method('DELETE')
-                                    <button class="btn btn-danger rounded-circle" id="deleteButton" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;">
+                                    <button class="btn btn-danger rounded-circle boton-custom" id="deleteButton" data-toggle="tooltip" data-placement="top" title="Eliminar usuario">
                                       <i class="fas fa-trash-alt fa-sm"></i>
                                     </button>
                                   </form>
@@ -65,6 +66,11 @@
                         </div>
                       </div>
                 </div>
+                <div style ="position: absolute; bottom: 8px;right:8px;">
+                  <a href="{{ url('/admin/configurar') }}" class="btn btn-dark rounded-circle boton-custom" data-toggle="tooltip" data-placement="top" title="Regresar">
+                      <i class="fas fa-sign-in-alt fa-flip-horizontal"></i>
+                  </a>
+                </div>
             </div>
         </div>
     </section>
@@ -79,59 +85,5 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.17.6/dist/sweetalert2.all.min.js"></script>
-    <script>
-      $(document).ready(function() {
-          $('#tabla-categoria').DataTable({
-              "language": {
-                  "sProcessing": "Procesando...",
-                  "sLengthMenu": "Mostrar _MENU_ registros",
-                  "sZeroRecords": "No se encontraron resultados",
-                  "sEmptyTable": "Ningún dato disponible en esta tabla",
-                  "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                  "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                  "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                  "sInfoPostFix": "",
-                  "sSearch": "Buscar:",
-                  "sUrl": "",
-                  "sInfoThousands": ",",
-                  "sLoadingRecords": "Cargando...",
-                  "oPaginate": {
-                      "sFirst": "Primero",
-                      "sLast": "Último",
-                      "sNext": "<i class='fas fa-angle-right'></i>",
-                      "sPrevious": "<i class='fas fa-angle-left'></i>"
-                  },
-                  "oAria": {
-                      "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                      "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                  }
-              },
-              "order": [[ 0, "desc" ]]
-          });      
- 
-          $('button#deleteButton').on('click', function(e){
-            e.preventDefault();
-            // iniciar
-            Swal.fire({
-              title: '¿Estás seguro?',
-              text: "¡No podrás revertir esto!",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#11cdef',
-              cancelButtonColor: '#f5365c',
-              confirmButtonText: 'Si, eliminar',
-              cancelButtonText: 'Cancelar'
-            }).then((result) => {
-              if (result.value) {
-                Swal.fire(
-                  'Eliminado',
-                  'Su archivo ha sido eliminado.',
-                  'success'
-                )
-                $(this).closest("form").submit();
-              }
-            }) 
-          });
-      });
-    </script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 @endpush

@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('titulo', 'Crear Compra')
+@section('titulo', 'Realizar Venta')
 @section('content')
 <div class="content-wrapper">
   <div class="content-header">
       <div class="container-fluid">
           <div class="row mb-2">
               <div class="col-6 ml-auto mr-auto">
-                  <h1 class="m-0 text-dark text-center">Crear Compra</h1>
+                  <h1 class="m-0 text-dark text-center">Realizar Venta</h1>
               </div>
           </div>
       </div>
@@ -20,15 +20,15 @@
             <div class="card-header">
               <h3 class="card-title">Ingresar los datos</h3>
             </div>
-            <form role="form" action="{{ route('admin.compras.store') }}" method="POST">
+            <form role="form" action="{{ route('admin.ventas.store') }}" method="POST">
               @csrf @method('POST')
               <div class="card-body row">
                 <div class="form-group col-12 col-md-12">
-                  <label for="proveedor_id">Proveedor</label>
-                  <select name="proveedor_id" class="form-control js-example-basic-single">
-                    <option value="" disabled selected hidden>Seleccione un proveedor</option>
-                    @foreach ($personas as $persona)
-                        <option value="{{$persona->id}}">{{ $persona->nombre }}</option>
+                  <label for="cliente_id">Clientes</label>
+                  <select name="cliente_id" class="form-control js-example-basic-single">
+                    <option value="" disabled selected hidden>Seleccione un cliente</option>
+                    @foreach ($clientes as $cliente)
+                        <option value="{{$cliente->id}}">{{ $cliente->nombre }}</option>
                     @endforeach                              
                   </select>                  
                 </div>
@@ -62,17 +62,21 @@
                       <select name="for_producto_id" id="for_producto_id" class="form-control js-example-basic-single">
                         <option value="" disabled selected hidden>Seleccione un producto</option>
                           @foreach ($productos as $producto)
-                              <option value="{{$producto->id}}">{{ $producto->nombre }}</option>
+                              <option value="{{$producto->id}}_{{$producto->stock}}_{{$producto->precio}}">{{ $producto->producto}}</option>
                           @endforeach                              
                       </select>  
                     </div>
-                    <div class="form-group col-12 col-md-3">
+                    <div class="form-group col-12 col-md-2">
                         <label for="cantidad">Cantidad</label>
-                        <input type="text" class="form-control" name="for_cantidad" id="for_cantidad" placeholder="Ingresar cantidad">
+                        <input type="text" class="form-control" name="for_cantidad" id="for_cantidad" placeholder="Ingresar cantidad" pattern="[0-9]{0,15}">
                     </div>
-                    <div class="form-group col-12 col-md-3">
+                    <div class="form-group col-12 col-md-2">
+                      <label for="stock">Stock</label>                      
+                      <input type="number" name="for_stock" class="form-control" id="for_stock" placeholder="Ingrese el stock" pattern="[0-9]{0,15}" disabled>
+                    </div>
+                    <div class="form-group col-12 col-md-2">
                         <label for="precio">Precio</label>
-                        <input type="number" class="form-control" name="for_precio" id="for_precio" placeholder="Ingresar precio">
+                        <input type="number" class="form-control" name="for_precio" id="for_precio" placeholder="Ingresar precio" pattern="[0-9]{0,15}" disabled>
                     </div>
                     <div class="form-group col-12 col-md-2">
                       <br>
@@ -156,35 +160,61 @@
 @push('js')
 <script>
     $(document).ready(function() {
-      $('.js-example-basic-single').select2();
+      $('.js-example-basic-single').select2({
+        language: {
+          noResults: function (params) {
+            return "No hay resultados";
+          }
+        }
+      });
       $('#btn_add').click(function(){
         agregar();
       });
     });
+
     var cont = 0;
     total = 0;
     subtotal = [];
     $("#guardar").hide();
+    $("#for_producto_id").change(mostrarValores);
 
+    function mostrarValores(){
+      datosProducto = document.getElementById('for_producto_id').value.split('_');
+      $("#for_precio").val(datosProducto[2]);
+      $("#for_stock").val(datosProducto[1]);
+    }
     function agregar(){
-      prodcuto_id = $("#for_producto_id").val();
+      datosProducto = document.getElementById('for_producto_id').value.split('_');
+      producto_id = datosProducto[0];
       producto = $("#for_producto_id option:selected").text();
       cantidad = $("#for_cantidad").val();
       precio = $("#for_precio").val();
+      stock = $("#for_stock").val();
       impuesto = 0.18;
 
-      if( prodcuto_id != "" && cantidad != "" && cantidad>0 && precio != ""){
-        subtotal[cont] = (cantidad*precio);
-        total = total + subtotal[cont];
-        var fila = '<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn btn-warning rounded-circle" onclick="eliminar('+cont+');"><i class="fas fa-times"></i></button></td><td><input type="hidden" name="producto_id[]" value="'+prodcuto_id+'">'+producto+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio[]" value="'+precio+'"></td><td>S/.'+subtotal[cont]+'</td></tr>';
-        cont++;
-        limpiar();
-        totales();
-        // $("#total").html("S/. " + total);
-        evaluar();
-        $("#detalles").append(fila);
+      if( producto_id != "" && cantidad != "" && cantidad>0 && precio != ""){
+          if (parseInt(stock)>=parseInt(cantidad)) {
+              subtotal[cont] = (cantidad*precio);
+              total = total + subtotal[cont];
+
+              var fila = '<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn btn-warning rounded-circle" onclick="eliminar('+cont+');"><i class="fas fa-times"></i></button></td><td><input type="hidden" name="producto_id[]" value="'+producto_id+'">'+producto+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio[]" value="'+parseFloat(precio).toFixed(2)+'"></td><td>S/.'+parseFloat(subtotal[cont]).toFixed(2)+'</td></tr>';
+              cont++;
+              limpiar();
+              totales();
+              // $("#total").html("S/. " + total);
+              evaluar();
+              $("#detalles").append(fila);
+          }else{
+              Swal.fire({
+              type: 'error',
+              text: 'La cantidad a vender supera el stock',          
+            })
+          }  
       }else{
-        alert('error al ingresar detalle de compra');
+          Swal.fire({
+          type: 'error',
+          text: 'Rellene todos los campos del detalle de la venta',
+        })
       }
     }
 
@@ -222,4 +252,5 @@
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.17.6/dist/sweetalert2.all.min.js"></script>
 @endpush

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titulo', 'Lista de Compras')
+@section('titulo', 'Lista de Ventas')
 @section('content')
 <div class="content-wrapper">
 
@@ -10,7 +10,7 @@
                     <div class="card">
                         <div class="card-header pb-1">
                           <h3 class="card-title">
-                            <b>LISTA DE COMPRAS</b>                            
+                            <b>LISTA DE VENTAS</b>                            
                           </h3>
                         </div>
                         <div class="card-body table-responsive">
@@ -19,46 +19,49 @@
                             <tr>
                               <th class="mx-auto" style="width: 110px;">Fecha</th>
                               <th class="mx-auto" style="width: 100px;">Número</th>                                
-                              <th class="mx-auto" style="width: 150px;">Proveedor</th>
+                              <th class="mx-auto" style="width: 150px;">Cliente</th>
                               <th>Tipo</th>
                               <th>Serie</th>
-                              <th class="mx-auto" style="width: 130px;">Comprador</th>                             
+                              <th class="mx-auto" style="width: 130px;">Vendedor</th>                             
                               <th>Total</th>
                               <th>Estado</th>
                               <th class="mx-auto" style="width: 170px;">Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                              @foreach ($compras as $compra)
+                              @foreach ($ventas as $venta)
                               <tr>
-                                <td class="align-middle">{{ \Carbon\Carbon::parse($compra->fecha_hora)->format('d/m/Y') }}</td>
-                                <td class="align-middle">{{ $compra->numero_comprobante }}</td>                              
-                                <td class="align-middle">{{ $compra->nombre }}</td>                                
-                                <td class="align-middle">{{ $compra->tipo_comprobante }}</td>
-                                <td class="align-middle">{{ $compra->serie_comprobante }}</td>                                
-                                <td class="align-middle">{{ $compra->name }}</td>
-                                <td class="align-middle">{{ $compra->total }}</td>
+                                <td class="align-middle">{{ \Carbon\Carbon::parse($venta->fecha_hora)->format('d/m/Y') }}</td>
+                                <td class="align-middle">{{ $venta->numero_comprobante }}</td>                              
+                                <td class="align-middle">{{ $venta->cliente }}</td>                                
+                                <td class="align-middle">{{ $venta->tipo_comprobante }}</td>
+                                <td class="align-middle">{{ $venta->serie_comprobante }}</td>                                
+                                <td class="align-middle">{{ $venta->name }}</td>
+                                <td class="align-middle">{{ $venta->total }}</td>
                                 <td class="align-middle">
-                                  @if ( $compra->estado !== "Anulado")
-                                  <span class="badge badge-success">{{ $compra->estado }}</span>                                 
+                                  @if ( $venta->estado !== "Anulado")
+                                  <span class="badge badge-success">{{ $venta->estado }}</span>                                 
                                   @else
-                                  <span class="badge badge-danger">{{ $compra->estado }}</span>                                 
+                                  <span class="badge badge-danger">{{ $venta->estado }}</span>                                 
                                   @endif
                                 </td>
                                 <td class="align-middle" align="left">
-                                    <a href="{{ route('admin.compras.show', $compra->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Ver detalles de compra">
+                                    <a href="{{ route('admin.ventas.show', $venta->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Ver detalles de venta">
                                       <i class="fas fa-eye fa-sm"></i>
                                     </a>
-                                    <a href="{{ route('admin.compras.print', $compra->id) }}" target="_blank" class="btn btn-warning rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Imprimir compra">
+                                    {{--  
+                                    <a href="{{ route('admin.ventas.print', $venta->id) }}" target="_blank" class="btn btn-warning rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Imprimir venta">
                                       <i class="fas fa-print text-white fa-sm"></i>
                                     </a>
-                                    <a href="{{ route('admin.compras.pdf', $compra->id)}}" target="_blank" class="btn btn-primary rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Exportar compra en PDF">
+                                    
+                                    <a href="{{ route('admin.ventas.pdf', $venta->id)}}" target="_blank" class="btn btn-primary rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Exportar venta en PDF">
                                       <i class="fas fa-download fa-sm"></i>
                                     </a>
-                                    @if( $compra->estado !== "Anulado")
-                                    <form action="{{ route('admin.compras.destroy', $compra->id) }}" method="POST" style="display: inline">
+                                    --}}
+                                    @if( $venta->estado !== "Anulado")
+                                    <form action="{{ route('admin.ventas.destroy', $venta->id) }}" method="POST" style="display: inline">
                                         @csrf {{ method_field('DELETE') }}
-                                        <button class="btn btn-danger rounded-circle" id="deleteButton" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Anular compra">
+                                        <button class="btn btn-danger rounded-circle" id="deleteButton" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Anular venta">
                                             <i class="fas fa-ban fa-sm"></i>
                                         </button>
                                     </form>
@@ -71,10 +74,10 @@
                             <tr>
                               <th class="mx-auto" style="width: 110px;">Fecha</th>
                               <th class="mx-auto" style="width: 100px;">Número</th>                                
-                              <th class="mx-auto" style="width: 150px;">Proveedor</th>
+                              <th class="mx-auto" style="width: 150px;">Cliente</th>
                               <th>Tipo</th>
                               <th>Serie</th>
-                              <th class="mx-auto" style="width: 130px;">Comprador</th>                             
+                              <th class="mx-auto" style="width: 130px;">Vendedor</th>                             
                               <th>Total</th>
                               <th>Estado</th>
                               <th class="mx-auto" style="width: 170px;">Acciones</th>

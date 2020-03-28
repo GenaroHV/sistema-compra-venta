@@ -10,6 +10,7 @@ use App\Proveedor;
 use App\Product;
 use Carbon\Carbon;
 use PDF;
+
 class CompraController extends Controller
 {
     public function index(){
@@ -19,7 +20,6 @@ class CompraController extends Controller
                 'compras.numero_comprobante', 'compras.fecha_hora', 'compras.impuesto', 
                 'compras.total', 'compras.estado', 'proveedores.nombre as proveedor', 'users.name')
         ->get();
-        #return $ingresos;
         return view('admin.compras.index', compact('compras'));
     } 
 

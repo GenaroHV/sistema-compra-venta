@@ -15,7 +15,7 @@
   <section class="content">
       <div class="container-fluid">         
           <div class="row">
-              <div class="col-12 col-md-9 ml-auto mr-auto">
+              <div class="col-12 col-md-10 ml-auto mr-auto">
                   <div class="card">
                       <div class="card-body table-responsive">
                       <table id="table-posts" class="table table-flush">
@@ -58,6 +58,11 @@
                       </table>
                     </div>
                   </div>
+            </div>
+            <div style ="position: absolute; bottom: 8px;right:8px;">
+              <a href="{{ url('/admin/configurar') }}" class="btn btn-dark rounded-circle boton-custom" data-toggle="tooltip" data-placement="top" title="Regresar">
+                  <i class="fas fa-sign-in-alt fa-flip-horizontal"></i>
+              </a>
             </div>
         </div>
     </div>

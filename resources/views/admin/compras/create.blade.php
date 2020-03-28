@@ -56,7 +56,7 @@
                       <select name="for_producto_id" id="for_producto_id" class="form-control js-example-basic-single">
                         <option value="" disabled selected hidden>Seleccione un producto</option>
                           @foreach ($productos as $producto)
-                              <option value="{{$producto->id}}">{{ $producto->nombre }}</option>
+                              <option value="{{$producto->id}}">{{ $producto->nombre .' - '. $producto->codigo }}</option>
                           @endforeach                              
                       </select>  
                     </div>

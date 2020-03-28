@@ -40,7 +40,9 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label class="form-control-label">Permisos</label>
-                                            @include('admin.permisos.checkboxes', ['model' => $role])
+                                            <div class="border rounded" style="height: 100px; width: 100%; overflow-y: scroll;">
+                                                @include('admin.permisos.checkboxes', ['model' => $role])
+                                            </div>                                            
                                         </div>
                                     </div>
                                     <div class="row my-4">                                    
@@ -54,6 +56,11 @@
                             </form>
                         </div>
                     </div>
+                </div>
+                <div style ="position: absolute; bottom: 8px;right:8px;">
+                    <a href="{{ route('admin.roles.index') }}" class="btn btn-dark rounded-circle boton-custom" data-toggle="tooltip" data-placement="top" title="Regresar">
+                        <i class="fas fa-sign-in-alt fa-flip-horizontal"></i>
+                    </a>
                 </div>
             </div>
         </div>

@@ -85,6 +85,7 @@
                       </div>
                   </div>    
                 </div>
+                @include('admin.partials.regresar2')
             </div>
         </div>
     </section>

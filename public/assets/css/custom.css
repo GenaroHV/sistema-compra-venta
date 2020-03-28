@@ -7,3 +7,9 @@
         margin-bottom: 0;
     }
 }
+.boton-custom{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
