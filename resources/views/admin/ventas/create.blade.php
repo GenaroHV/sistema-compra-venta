@@ -39,13 +39,13 @@
                 </div>
                  --}}
                 <div class="form-group col-12 col-md-4">
-                    <label for="tipo_comprobante">Tipo de comprobante</label>
-                    <select name="tipo_comprobante" class="form-control">
-                        <option value="" disabled selected hidden>Seleccione tipo de comprobante</option>
-                        <option value="Boleta">Boleta</option>
-                        <option value="Factura">Factura</option>
-                        <option value="Tikect">Tikect</option>
-                    </select>
+                  <label for="tipo_comprobante">Tipo de comprobante</label>
+                  <select name="tipo_comprobante" class="form-control">
+                      <option value="" disabled selected hidden>Seleccione una opción</option>                        
+                      @foreach($tipo_comprobante as $item)
+                        <option value="{{ $item }}"> {{ strtoupper($item) }}</option>
+                      @endforeach
+                  </select>
                 </div>
                 <div class="form-group col-12 col-md-4">
                     <label for="serie_comprobante">Serie de comprobante</label>

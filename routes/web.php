@@ -34,23 +34,19 @@ Route::group([
         Route::middleware('role:Administrador')->put('users/{user}/roles', 'UsersRolesController@update')->name('users.roles.update');
         Route::middleware('role:Administrador')->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('users.permissions.update');
         
-
         Route::resource('categorias', 'CategoriaController', ['except' => 'show']);
         Route::resource('productos', 'ProductoController');
-
-        #Route::get('productos/incrementar/{id}', 'ProductoController@incrementar')->name('productos.incrementar');
-        #Route::put('productos/incrementar/{id}', 'ProductoController@actualizarIncremento')->name('productos.incrementar');
-        #Route::get('productos/disminuir/{id}', 'ProductoController@disminuir')->name('productos.disminuir');
-        #Route::put('productos/disminuir/{id}', 'ProductoController@actualizarDisminucion')->name('productos.disminuir');
 
         Route::resource('clientes', 'ClienteController');
         Route::resource('compras', 'CompraController');
         Route::get('compras/{id}/print', 'CompraController@print')->name('compras.print');
         Route::get('compras/{id}/export', 'CompraController@exportPdf')->name('compras.pdf');        
-        #Route::put('compras/desactivar/{id}', 'CompraController@desactivar')->name('compras.desactivar');
         
         Route::resource('proveedores', 'ProveedorController');
         Route::resource('ventas', 'VentaController');
-        
+        Route::get('ventas/{id}/print', 'VentaController@print')->name('ventas.print');
+        Route::get('ventas/{id}/export', 'VentaController@exportPdf')->name('ventas.pdf'); 
+
+        Route::get('reportes', 'ReporteController@index')->name('reportes');        
     }
 );

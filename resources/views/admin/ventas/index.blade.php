@@ -49,7 +49,7 @@
                                     <a href="{{ route('admin.ventas.show', $venta->id) }}" class="btn btn-info rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Ver detalles de venta">
                                       <i class="fas fa-eye fa-sm"></i>
                                     </a>
-                                    {{--  
+                                    
                                     <a href="{{ route('admin.ventas.print', $venta->id) }}" target="_blank" class="btn btn-warning rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Imprimir venta">
                                       <i class="fas fa-print text-white fa-sm"></i>
                                     </a>
@@ -57,7 +57,7 @@
                                     <a href="{{ route('admin.ventas.pdf', $venta->id)}}" target="_blank" class="btn btn-primary rounded-circle" style="padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" data-toggle="tooltip" data-placement="top" title="Exportar venta en PDF">
                                       <i class="fas fa-download fa-sm"></i>
                                     </a>
-                                    --}}
+                                    
                                     @if( $venta->estado !== "Anulado")
                                     <form action="{{ route('admin.ventas.destroy', $venta->id) }}" method="POST" style="display: inline">
                                         @csrf {{ method_field('DELETE') }}

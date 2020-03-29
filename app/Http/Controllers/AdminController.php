@@ -8,6 +8,8 @@ use App\Product;
 use App\Cliente;
 use App\Proveedor;
 use App\User;
+use App\Compra;
+use App\Venta;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 class AdminController extends Controller
@@ -19,11 +21,15 @@ class AdminController extends Controller
 
     public function index()
     {
-        $categoria = Category::all();
-        $producto = Product::all();
-        $cliente = Cliente::all();
-        $proveedor = Proveedor::all();
-        return view('admin.principal', compact('categoria', 'producto', 'cliente', 'proveedor'));
+        $categoria = Category::count();
+        $producto = Product::count();
+        $cliente = Cliente::count();
+        $proveedor = Proveedor::count();
+        $venta_registrado = Venta::where('estado','=','Registrado')->count();
+        $venta_anulado = Venta::where('estado','=','Anulado')->count();
+        $compra_registrado = Compra::where('estado','=','Registrado')->count();
+        $compra_anulado = Compra::where('estado','=','Anulado')->count();
+        return view('admin.principal', compact('categoria', 'producto', 'cliente', 'proveedor', 'compra_registrado', 'compra_anulado','venta_registrado', 'venta_anulado'));
     }
     public function configurar(){
         $user = User::all();

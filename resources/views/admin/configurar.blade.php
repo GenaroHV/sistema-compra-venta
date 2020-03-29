@@ -52,6 +52,18 @@
                     <a href="{{ route('admin.permissions.index') }}" class="small-box-footer" style="color: white !important;">Leer más <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-dark">
+                    <div class="inner text-white">
+                        <h3>1</h3>
+                        <p>Configurar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <a href="#" class="small-box-footer" style="color: white !important;">Leer más <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
         </div>
       </div>
     </section>
