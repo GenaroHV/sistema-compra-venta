@@ -12,12 +12,14 @@
     "devDependencies": {
         "axios": "^0.19",
         "cross-env": "^5.1",
+        "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
         "resolve-url-loader": "^2.3.1",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "vue-router": "^3.1.6"
+        "laravel-echo": "^1.6.1",
+        "pusher-js": "^5.1.1"
     }
 }

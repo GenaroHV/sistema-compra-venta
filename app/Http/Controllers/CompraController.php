@@ -8,8 +8,10 @@ use App\Compra;
 use App\DetalleCompra;
 use App\Proveedor;
 use App\Product;
+use App\User;
 use Carbon\Carbon;
 use PDF;
+use App\Notifications\NotifyAdmin;
 
 class CompraController extends Controller
 {
@@ -63,7 +65,25 @@ class CompraController extends Controller
                 $detalle->save();
                 $cont=$cont+1;
             }
-             DB::commit();
+            $fechaActual = date('Y-m-d');
+            $numVentas = DB::table('ventas')->whereDate('created_at', $fechaActual)->count();
+            $numCompras = DB::table('compras')->whereDate('created_at', $fechaActual)->count();
+
+            $arregloDatos = [
+                'ventas' => [
+                        'numero'    => $numVentas,
+                        'mensaje'   => 'Ventas'
+                        ],
+                'compras' => [
+                        'numero'    => $numCompras,
+                        'mensaje'   => 'Compras'
+                        ]
+            ];
+            $allUsers = User::all();
+            foreach ($allUsers as $notificar) {
+                User::findOrFail($notificar->id)->notify(new NotifyAdmin($arregloDatos));
+            }
+            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
         }

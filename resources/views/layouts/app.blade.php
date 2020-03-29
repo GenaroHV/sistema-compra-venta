@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Id for channel notification -->
+    <meta name="userId" content="{{ Auth::check() ? Auth::user()->id : ''}}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} | @yield('titulo')</title>    
@@ -48,9 +50,9 @@
     <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    {{-- Mix JS 
+    {{-- Mix JS  --}}
     <script src="{{ mix('/js/app.js') }}"></script>
-    --}}
+    
     <!-- Activar Tooltip -->
     <script>
         $(document).ready(function(){
