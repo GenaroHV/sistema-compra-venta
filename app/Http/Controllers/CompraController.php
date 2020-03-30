@@ -11,6 +11,7 @@ use App\Product;
 use App\User;
 use Carbon\Carbon;
 use PDF;
+use App\Http\Requests\CompraFormRequest;
 use App\Notifications\NotifyAdmin;
 
 class CompraController extends Controller
@@ -22,7 +23,7 @@ class CompraController extends Controller
                 'compras.numero_comprobante', 'compras.fecha_hora', 'compras.impuesto', 
                 'compras.total', 'compras.estado', 'proveedores.nombre as proveedor', 'users.name')
         ->get();
-        return view('admin.compras.index', compact('compras'));
+        return view('admin.modulo-compras.compras.index', compact('compras'));
     } 
 
     public function create(){
@@ -30,10 +31,10 @@ class CompraController extends Controller
         $proveedores = Proveedor::all();
         $compras = Compra::all();
         $productos = Product::all();
-        return view('admin.compras.create', compact('compras', 'proveedores', 'productos', 'tipo_comprobante'));
+        return view('admin.modulo-compras.compras.create', compact('compras', 'proveedores', 'productos', 'tipo_comprobante'));
     }
 
-    public function store(Request $request){
+    public function store(CompraFormRequest $request){
         
         try {
             DB::beginTransaction();
@@ -108,7 +109,7 @@ class CompraController extends Controller
         ->where('d.compra_id', '=', $id)
         ->get();
         
-        return view('admin.compras.show',['compra' => $compra,'detalles' =>$detalles]);
+        return view('admin.modulo-compras.compras.show',['compra' => $compra,'detalles' =>$detalles]);
     }
 
     public function print($id){
@@ -129,7 +130,7 @@ class CompraController extends Controller
         ->where('d.compra_id', '=', $id)
         ->get();
         
-        return view('admin.compras.print',['compra' => $compra,'detalles' =>$detalles]);
+        return view('admin.modulo-compras.compras.print',['compra' => $compra,'detalles' =>$detalles]);
     }
 
     public function destroy($id){
@@ -157,7 +158,7 @@ class CompraController extends Controller
         ->where('d.compra_id', '=', $id)
         ->get();
         $nombre = "COMPRA N° ".str_pad($compra->id, 3,'0', STR_PAD_LEFT) . '-'. date("Y") . '-JS';
-        $pdf = PDF::loadView('admin.compras.pdf', compact('compra', 'detalles'));
+        $pdf = PDF::loadView('admin.modulo-compras.compras.pdf', compact('compra', 'detalles'));
         return $pdf->download("$nombre.pdf");
     }
 }

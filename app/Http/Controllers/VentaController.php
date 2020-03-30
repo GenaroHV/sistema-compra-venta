@@ -12,6 +12,7 @@ use App\User;
 use Carbon\Carbon;
 use PDF;
 use App\Notifications\NotifyAdmin;
+use App\Http\Requests\VentaFormRequest;
 
 class VentaController extends Controller
 {
@@ -23,7 +24,7 @@ class VentaController extends Controller
                 'ventas.numero_comprobante', 'ventas.fecha_hora', 'ventas.impuesto', 
                 'ventas.estado', 'ventas.total', 'clientes.nombre as cliente', 'users.name')
         ->get();
-        return view('admin.ventas.index', compact('ventas'));
+        return view('admin.modulo-ventas.ventas.index', compact('ventas'));
     }
 
     public function create(){
@@ -35,10 +36,10 @@ class VentaController extends Controller
         ->where('p.stock', '>', '0')
         ->groupBy('producto', 'p.id', 'p.stock')
         ->get();
-        return view('admin.ventas.create', compact('clientes', 'productos', 'tipo_comprobante'));
+        return view('admin.modulo-ventas.ventas.create', compact('clientes', 'productos', 'tipo_comprobante'));
     }
 
-    public function store(Request $request){
+    public function store(VentaFormRequest $request){
         
         try {
             DB::beginTransaction();
@@ -113,7 +114,7 @@ class VentaController extends Controller
         ->where('d.venta_id', '=', $id)
         ->get();
         
-        return view('admin.ventas.show',['venta' => $venta,'detalles' =>$detalles]);
+        return view('admin.modulo-ventas.ventas.show',['venta' => $venta,'detalles' =>$detalles]);
     }
 
     public function print($id){
@@ -134,7 +135,7 @@ class VentaController extends Controller
         ->where('d.venta_id', '=', $id)
         ->get();
         
-        return view('admin.ventas.print',['venta' => $venta,'detalles' =>$detalles]);
+        return view('admin.modulo-ventas.ventas.print',['venta' => $venta,'detalles' =>$detalles]);
     }
 
     public function destroy($id){
@@ -162,7 +163,7 @@ class VentaController extends Controller
         ->where('d.venta_id', '=', $id)
         ->get();
         $nombre = "VENTA N° ".str_pad($venta->id, 3,'0', STR_PAD_LEFT) . '-'. date("Y") . '-JS';
-        $pdf = PDF::loadView('admin.ventas.pdf', compact('venta', 'detalles'));
+        $pdf = PDF::loadView('admin.modulo-ventas.ventas.pdf', compact('venta', 'detalles'));
         return $pdf->download("$nombre.pdf");
     }
     

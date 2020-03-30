@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header pb-1">
               <h3 class="card-title">
-                <b>REPORTES ESTADÍSTICOS</b>                            
+                <b>GRÁFICOS ESTADÍSTICOS</b>                            
               </h3>
             </div>
             <div class="card-body">

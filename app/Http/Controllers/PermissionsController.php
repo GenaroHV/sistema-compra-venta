@@ -9,12 +9,12 @@ class PermissionsController extends Controller
 {
     public function index(){
         #$this->authorize('view', new Permission);
-        return view('admin.permisos.index', ['permissions' => Permission::all()]);
+        return view('admin.modulo-admin.permisos.index', ['permissions' => Permission::all()]);
     }
 
     public function edit(Permission $permission){
         #$this->authorize('update', $permission);
-        return view('admin.permisos.edit', [
+        return view('admin.modulo-admin.permisos.edit', [
             'permission'    => $permission
         ]);
     }

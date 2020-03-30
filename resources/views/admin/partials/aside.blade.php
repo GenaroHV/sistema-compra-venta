@@ -34,8 +34,7 @@
               <i class="fas fa-home"></i>
               <p>Panel Principal</p>
             </a>
-          </li>
-          
+          </li>     
           <li class="nav-header">ALMACEN</li>
           @include('admin.partials.link.categorias')
           @include('admin.partials.link.productos')
@@ -45,10 +44,6 @@
           <li class="nav-header">VENTAS</li>
           @include('admin.partials.link.ventas')
           @include('admin.partials.link.clientes')
-          {{-- 
-          <li class="nav-header">REPORTES</li>
-          @include('admin.partials.link.reportes')
-          --}}
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

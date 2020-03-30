@@ -8,7 +8,6 @@ use Auth;
 class NotificationController extends Controller
 {
     public function get(){
-        #return Notification::all();
         $unreadNotifications = Auth::user()->unreadNotifications;
         $fechaActual = date('Y-m-d');
         foreach ($unreadNotifications as $notification) {

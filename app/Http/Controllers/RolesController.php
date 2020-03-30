@@ -11,14 +11,14 @@ class RolesController extends Controller
     public function index()
     {
         #$this->authorize('view', new Role);
-        return view('admin.roles.index', ['roles' => Role::all()]); 
+        return view('admin.modulo-admin.roles.index', ['roles' => Role::all()]); 
     }
 
     public function create()
     {
         #$this->authorize('create', $role = new Role);
         $role = new Role;
-        return view('admin.roles.create', [
+        return view('admin.modulo-admin.roles.create', [
             'role' => $role,
             'permissions' => Permission::pluck('name', 'id')            
         ]);
@@ -48,7 +48,7 @@ class RolesController extends Controller
     public function edit(Role $role)
     {
         #$this->authorize('update', $role);
-        return view('admin.roles.edit', [
+        return view('admin.modulo-admin.roles.edit', [
             'role' => $role,
             'permissions' => Permission::pluck('name', 'id')
         ]);

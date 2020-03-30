@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.usuarios.index', compact('users'));
+        return view('admin.modulo-admin.usuarios.index', compact('users'));
     }
 
     public function create()
@@ -22,7 +22,7 @@ class UserController extends Controller
         $user = new User;
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
-        return view('admin.usuarios.create', compact('user', 'roles', 'permissions'));
+        return view('admin.modulo-admin.usuarios.create', compact('user', 'roles', 'permissions'));
     }
 
     public function store(Request $request)
@@ -62,7 +62,7 @@ class UserController extends Controller
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
         #$this->authorize('update', $usuario);
-        return view('admin.usuarios.edit', compact('user', 'roles','permissions'));
+        return view('admin.modulo-admin.usuarios.edit', compact('user', 'roles','permissions'));
     }
 
     public function update(UserUpdateRequest $request, $id)

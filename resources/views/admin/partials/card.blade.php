@@ -23,7 +23,6 @@
             <a href="{{ route('admin.productos.index') }}" class="small-box-footer">Leer más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-
     <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
             <div class="inner text-white">
@@ -48,7 +47,6 @@
             <a href="{{ route('admin.proveedores.index') }}" class="small-box-footer">Leer más <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-  
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box">
         <span class="info-box-icon bg-indigo elevation-1">
@@ -60,11 +58,8 @@
             {{ $compra_registrado }}            
           </span>
         </div>
-        <!-- /.info-box-content -->
       </div>
-      <!-- /.info-box -->
     </div>
-    <!-- /.col -->
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
         <span class="info-box-icon bg-pink elevation-1">
@@ -76,15 +71,9 @@
             {{ $compra_anulado }} 
           </span>
         </div>
-        <!-- /.info-box-content -->
       </div>
-      <!-- /.info-box -->
     </div>
-    <!-- /.col -->
-
-    <!-- fix for small devices only -->
     <div class="clearfix hidden-md-up"></div>
-
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
         <span class="info-box-icon bg-indigo elevation-1">
@@ -96,11 +85,8 @@
             {{ $venta_registrado }} 
           </span>
         </div>
-        <!-- /.info-box-content -->
       </div>
-      <!-- /.info-box -->
     </div>
-    <!-- /.col -->
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
         <span class="info-box-icon bg-pink elevation-1">
@@ -112,9 +98,6 @@
             {{ $venta_anulado }} 
           </span>
         </div>
-        <!-- /.info-box-content -->
       </div>
-      <!-- /.info-box -->
     </div>
-    <!-- /.col -->
   </div>

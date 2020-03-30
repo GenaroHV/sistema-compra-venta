@@ -18,8 +18,9 @@
                     </a>
                 </li>
             </div>
-            <div v-else>
-                <a href="#" class="dropdown-item dropdown-footer">No hay notificaciones</a>
+            <div v-else class="text-center my-2" style="color: #ced0d2!important;">
+                <i class="fas fa-bell fa-10x"></i> <br>
+                Sin notificaciones
             </div>
         </div>
     </li> 

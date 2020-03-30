@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\Http\Requests\ClienteFormRequest;
 class ClienteController extends Controller
 {
     public function index(){
         $clientes = Cliente::all();
-        return view('admin.clientes.index', compact('clientes'));
+        return view('admin.modulo-ventas.clientes.index', compact('clientes'));
     }
 
     public function create(){
         $tipo_documento = ['DNI', 'RUC', 'PASS'];
-        return view('admin.clientes.create', compact('tipo_documento'));
+        return view('admin.modulo-ventas.clientes.create', compact('tipo_documento'));
     }
 
-    public function store(Request $request){
+    public function store(ClienteFormRequest $request){
         $cliente = new Cliente;
         $cliente->nombre = $request->get('nombre');
         $cliente->tipo_documento = $request->get('tipo_documento');
@@ -32,7 +33,7 @@ class ClienteController extends Controller
     public function edit($id){
         $tipo_documento = ['DNI', 'RUC', 'PASS'];
         $cliente = Cliente::findOrFail($id);
-        return view('admin.clientes.edit', compact('cliente', 'tipo_documento'));
+        return view('admin.modulo-ventas.clientes.edit', compact('cliente', 'tipo_documento'));
     }
 
     public function update(Request $request, $id){

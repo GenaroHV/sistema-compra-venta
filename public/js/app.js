@@ -1934,6 +1934,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['notifications'],
   data: function data() {
@@ -12420,16 +12421,19 @@ var render = function() {
               }),
               0
             )
-          : _c("div", [
-              _c(
-                "a",
-                {
-                  staticClass: "dropdown-item dropdown-footer",
-                  attrs: { href: "#" }
-                },
-                [_vm._v("No hay notificaciones")]
-              )
-            ])
+          : _c(
+              "div",
+              {
+                staticClass: "text-center my-2",
+                staticStyle: { color: "#ced0d2!important" }
+              },
+              [
+                _c("i", { staticClass: "fas fa-bell fa-10x" }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v("\n            Sin notificaciones\n        ")
+              ]
+            )
       ]
     )
   ])
