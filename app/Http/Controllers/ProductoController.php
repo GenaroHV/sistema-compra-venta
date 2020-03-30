@@ -11,27 +11,25 @@ use Illuminate\Support\Facades\Redirect;
 
 class ProductoController extends Controller
 {
-    # Listar Producto
     public function index(){
-        $productos = Product::all();
+        $productos = Product::allowed()->get();
         return view('admin.modulo-almacen.productos.index', compact('productos'));
     }
 
-    # Ver un producto
-    public function show($id){
-        $producto = Product::findOrFail($id);
+    public function show(Product $product, $id){
+        $this->authorize('view', $product);
+        $producto = Product::find($id);
         return view('admin.modulo-almacen.productos.show', compact('producto'));
     }
 
-    # Ir a formulario de crear
     public function create(){
+        $this->authorize('create', new Product);
         $categorias = Category::all();
         return view('admin.modulo-almacen.productos.create', compact('categorias'));
     }
 
-    # Grabar los datos del formulario crear
     public function store(ProductoFormRequest $request){
-        
+        $this->authorize('create', new Product);
 
         $producto = new Product;
         $producto->codigo = $request->get('codigo');
@@ -46,16 +44,16 @@ class ProductoController extends Controller
         return redirect()->route('admin.productos.index')->with('flash', 'Producto creado con éxito');
     }
 
-    # Ir a formulario de editar
     public function edit($id){
         $producto = Product::findOrFail($id);
+        $this->authorize('update', $producto);
         $categorias = Category::all();
         return view('admin.modulo-almacen.productos.edit', compact('producto', 'categorias'));
     }
 
-    # Grabar los datos del formulario editar
     public function update(ProductoFormRequest $request, $id){
         $producto = Product::findOrFail($id);
+        $this->authorize('update', $producto);
         $producto->codigo = $request->get('codigo');
         $producto->nombre = $request->get('nombre');
         $producto->precio = $request->get('precio');
@@ -68,9 +66,9 @@ class ProductoController extends Controller
         return redirect()->route('admin.productos.index')->with('flash', 'Producto actualizado con éxito');
     }
 
-    # Eliminar un producto
     public function destroy($id){
         $producto = Product::findOrFail($id);
+        $this->authorize('delete', $producto);
         $producto->delete();
         return redirect()->route('admin.productos.index')->with('flash', 'Producto eliminado con éxito');
     }

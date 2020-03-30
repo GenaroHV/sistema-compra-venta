@@ -17,17 +17,19 @@ use App\Notifications\NotifyAdmin;
 class CompraController extends Controller
 {
     public function index(){
+        $compra = Compra::allowed()->get();
         $compras = Compra::join('proveedores', 'compras.proveedor_id', '=', 'proveedores.id')
         ->join('users', 'compras.user_id', '=', 'users.id')
         ->select('compras.id', 'compras.tipo_comprobante', 'compras.serie_comprobante', 
                 'compras.numero_comprobante', 'compras.fecha_hora', 'compras.impuesto', 
                 'compras.total', 'compras.estado', 'proveedores.nombre as proveedor', 'users.name')
         ->get();
-        return view('admin.modulo-compras.compras.index', compact('compras'));
+        return view('admin.modulo-compras.compras.index', compact('compras','compra'));
     } 
 
     public function create(){
         $tipo_comprobante = ['BOLETA', 'FACTURA', 'TICKET'];
+        $this->authorize('create', new Compra);
         $proveedores = Proveedor::all();
         $compras = Compra::all();
         $productos = Product::all();
@@ -35,7 +37,7 @@ class CompraController extends Controller
     }
 
     public function store(CompraFormRequest $request){
-        
+        $this->authorize('create', new Compra);
         try {
             DB::beginTransaction();
             $compra = new Compra;
@@ -91,7 +93,8 @@ class CompraController extends Controller
         return redirect()->route('admin.compras.index')->with('flash', 'Compra creado con éxito');
     }
     
-    public function show($id){
+    public function show(Compra $compra, $id){
+        $this->authorize('view', $compra);
         $compra = DB::table('compras as c')
         ->join('proveedores as p', 'c.proveedor_id', '=', 'p.id')
         ->join('detalle_compras as dc', 'c.id', '=', 'dc.compra_id')
@@ -112,7 +115,8 @@ class CompraController extends Controller
         return view('admin.modulo-compras.compras.show',['compra' => $compra,'detalles' =>$detalles]);
     }
 
-    public function print($id){
+    public function print(Compra $compra, $id){
+        $this->authorize('view', $compra);
         $compra = DB::table('compras as c')
         ->join('proveedores as p', 'c.proveedor_id', '=', 'p.id')
         ->join('detalle_compras as dc', 'c.id', '=', 'dc.compra_id')
@@ -135,13 +139,15 @@ class CompraController extends Controller
 
     public function destroy($id){
         $compra = Compra::findOrFail($id);
+        $this->authorize('delete', $compra);
         $compra->estado = 'Anulado';
         $compra->save();
     
         return redirect()->route('admin.compras.index')->with('flash', 'Compra anulada con éxito');
     }
 
-    public function exportPdf($id){        
+    public function exportPdf(Compra $compra, $id){
+        $this->authorize('view', $compra);       
         $compra = DB::table('compras as c')
         ->join('proveedores as p', 'c.proveedor_id', '=', 'p.id')
         ->join('detalle_compras as dc', 'c.id', '=', 'dc.compra_id')

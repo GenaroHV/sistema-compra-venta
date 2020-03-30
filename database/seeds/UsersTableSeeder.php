@@ -26,10 +26,31 @@ class UsersTableSeeder extends Seeder
         $editarCategoriaPermission = Permission::create(['name' => 'Editar Categoria']);
         $eliminarCategoriaPermission = Permission::create(['name' => 'Eliminar Categoria']);
 
+        $verProductoPermission = Permission::create(['name' => 'Ver Producto']);
+        $crearProductoPermission = Permission::create(['name' => 'Crear Producto']);
+        $editarProductoPermission = Permission::create(['name' => 'Editar Producto']);
+        $eliminarProductoPermission = Permission::create(['name' => 'Eliminar Producto']);
+
+        $verCompraPermission = Permission::create(['name' => 'Ver Compra']);
+        $crearCompraPermission = Permission::create(['name' => 'Crear Compra']);
+
+        $verProveedorPermission = Permission::create(['name' => 'Ver Proveedor']);
+        $crearProveedorPermission = Permission::create(['name' => 'Crear Proveedor']);
+        $editarProveedorPermission = Permission::create(['name' => 'Editar Proveedor']);
+        $eliminarProveedorPermission = Permission::create(['name' => 'Eliminar Proveedor']);
+
+        $verVentaPermission = Permission::create(['name' => 'Ver Venta']);
+        $crearVentaPermission = Permission::create(['name' => 'Crear Venta']);
+
+        $verClientePermission = Permission::create(['name' => 'Ver Cliente']);
+        $crearClientePermission = Permission::create(['name' => 'Crear Cliente']);
+        $editarClientePermission = Permission::create(['name' => 'Editar Cliente']);
+        $eliminarClientePermission = Permission::create(['name' => 'Eliminar Cliente']);
+
         $admin = new User;
         $admin->name = "Genaro Hernández";
         $admin->username = "genaro.hernandez";
-        $admin->email = "genaro@mail.com";        
+        $admin->email = "genaro@mail.com";  
         $admin->password = '654321';
         $admin->save();
         $admin->assignRole($administradorRole);

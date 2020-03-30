@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function create()
     {
-        #$this->authorize('create', new User);
+        $this->authorize('create', new User);
         $user = new User;
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        #$this->authorize('create', new User);
+        $this->authorize('create', new User);
         # Validamos
         $data = $request->validate([
             'username' => 'required|unique:users',
@@ -53,22 +53,22 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.usuarios.show', compact('user'));
+        return view('admin.modulo-admin.usuarios.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        #$user = User::findOrFail($id);
+        $user = User::findOrFail($id);
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
-        #$this->authorize('update', $usuario);
+        $this->authorize('update', $user);
         return view('admin.modulo-admin.usuarios.edit', compact('user', 'roles','permissions'));
     }
 
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        #$this->authorize('update', $user);
+        $this->authorize('update', $user);
         if($request->file('avatar') !== null){
             $user->avatar = optional($request->file('avatar'))->store('avatars','public');
         }
@@ -80,7 +80,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        #$this->authorize('delete', $user);
+        $this->authorize('delete', $user);
         $user->delete();
         return redirect()->route('admin.users.index')->withFlash('Usuario eliminado con éxito');
     }

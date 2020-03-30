@@ -48,7 +48,7 @@
                                         <button class="btn btn-primary btn-block">Crear</button>
                                     </div>
                                     <div class="col-12">
-                                        <span class="text-default text-small">La contraseña generada por defecto es: 654321</span>
+                                        <span class="text-default text-small">La contraseña generada por defecto es: 123456</span>
                                     </div>
                                 </div>
                             </form>                         

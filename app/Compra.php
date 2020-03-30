@@ -27,4 +27,12 @@ class Compra extends Model
     public function proveedor(){
         return $this->belongsTo(Proveedor::class);
     }
+
+    public function scopeAllowed($query)
+    {
+        if( auth()->user()->can('view', $this)){
+            return $query;
+        }
+        return $query->where('id', auth()->id());
+    }
 }

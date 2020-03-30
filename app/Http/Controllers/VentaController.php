@@ -17,6 +17,7 @@ use App\Http\Requests\VentaFormRequest;
 class VentaController extends Controller
 {
     public function index(){
+        $venta = Venta::allowed()->get();
         $ventas = Venta::join('clientes', 'ventas.cliente_id', '=', 'clientes.id')
         ->join('users', 'ventas.user_id', '=', 'users.id')
         #->join('detalle_ventas as dv', 'ventas.id', '=', 'dv.venta_id')
@@ -24,11 +25,12 @@ class VentaController extends Controller
                 'ventas.numero_comprobante', 'ventas.fecha_hora', 'ventas.impuesto', 
                 'ventas.estado', 'ventas.total', 'clientes.nombre as cliente', 'users.name')
         ->get();
-        return view('admin.modulo-ventas.ventas.index', compact('ventas'));
+        return view('admin.modulo-ventas.ventas.index', compact('ventas', 'venta'));
     }
 
     public function create(){
         $tipo_comprobante = ['BOLETA', 'FACTURA', 'TICKET'];
+        $this->authorize('create', new Venta);
         $clientes = Cliente::all();
         $productos = DB::table('products as p')
         ->join('detalle_compras as dc', 'p.id', '=', 'dc.producto_id')
@@ -40,7 +42,7 @@ class VentaController extends Controller
     }
 
     public function store(VentaFormRequest $request){
-        
+        $this->authorize('create', new Venta);
         try {
             DB::beginTransaction();
             $venta = new Venta;
@@ -96,7 +98,8 @@ class VentaController extends Controller
         return redirect()->route('admin.ventas.index')->with('flash', 'Venta realizada con éxito');
     }
 
-    public function show($id){
+    public function show(Venta $venta, $id){
+        $this->authorize('view', $venta);
         $venta = DB::table('ventas as v')
         ->join('clientes as c', 'v.cliente_id', '=', 'c.id')
         ->join('detalle_ventas as dv', 'c.id', '=', 'dv.venta_id')
@@ -117,7 +120,8 @@ class VentaController extends Controller
         return view('admin.modulo-ventas.ventas.show',['venta' => $venta,'detalles' =>$detalles]);
     }
 
-    public function print($id){
+    public function print(Venta $venta, $id){
+        $this->authorize('view', $venta);
         $venta = DB::table('ventas as v')
         ->join('clientes as c', 'v.cliente_id', '=', 'c.id')
         ->join('detalle_ventas as dv', 'v.id', '=', 'dv.venta_id')
@@ -140,13 +144,15 @@ class VentaController extends Controller
 
     public function destroy($id){
         $venta = Venta::findOrFail($id);
+        $this->authorize('delete', $venta);
         $venta->estado = 'Anulado';
         $venta->save();
     
         return redirect()->route('admin.ventas.index')->with('flash', 'Venta anulada con éxito');
     }
 
-    public function exportPdf($id){        
+    public function exportPdf(Venta $venta, $id){   
+        $this->authorize('view', $venta);     
         $venta = DB::table('ventas as v')
         ->join('clientes as c', 'v.cliente_id', '=', 'c.id')
         ->join('detalle_ventas as dv', 'v.id', '=', 'dv.venta_id')

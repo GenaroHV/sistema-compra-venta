@@ -28,7 +28,7 @@ class CategoriaController extends Controller
         return redirect()->route('admin.categorias.index')->with('flash', 'Categoria creada con éxito');
     }
 
-    public function edit($id){
+    public function edit($id){        
         $categoria = Category::findOrFail($id);
         $this->authorize('update', $categoria);
         return view('admin.modulo-almacen.categorias.edit', compact('categoria'));

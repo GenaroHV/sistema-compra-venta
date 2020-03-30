@@ -26,9 +26,9 @@ class ProveedorFormRequest extends FormRequest
         return [
             'nombre' => 'required|string|min:4|max:50',
             'tipo_documento' => 'required|string', 
-            'numero_documento' => 'required|numeric|min:8|max:10', 
+            'numero_documento' => 'required|numeric|min:8|max:12', 
             'direccion' => 'string|max:250', 
-            'telefono' => 'numeric|min:8|max:12', 
+            'telefono' => 'numeric|min:6|max:10', 
             'email' => 'email'
         ];
     }
