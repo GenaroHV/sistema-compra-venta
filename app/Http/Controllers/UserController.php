@@ -56,19 +56,20 @@ class UserController extends Controller
         return view('admin.modulo-admin.usuarios.show', compact('user'));
     }
 
-    public function edit(User $user)
-    {
+    public function edit($id)
+    {        
         $user = User::findOrFail($id);
+        #$this->authorize('update', $user);      
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
-        $this->authorize('update', $user);
+        
         return view('admin.modulo-admin.usuarios.edit', compact('user', 'roles','permissions'));
     }
 
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        $this->authorize('update', $user);
+        #$this->authorize('update', $user);
         if($request->file('avatar') !== null){
             $user->avatar = optional($request->file('avatar'))->store('avatars','public');
         }
