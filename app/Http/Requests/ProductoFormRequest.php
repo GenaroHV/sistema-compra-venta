@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class ProductoFormRequest extends FormRequest
 {
     /**
@@ -24,8 +24,12 @@ class ProductoFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'codigo' => 'required|min:4|max:8',
-            'nombre' => 'required|string|min:3|max:50',
+            'codigo' => [
+                'required',
+                'max:8',
+                Rule::unique('products')->ignore($this->route('categoria'))
+            ],
+            'nombre' => 'required|string|max:50',
             'descripcion' => 'max:255',
             'precio' => 'required|numeric',
             'avatar' => 'image|mimes:jpeg,png,jpg,svg|file|max:2048',
@@ -43,7 +47,9 @@ class ProductoFormRequest extends FormRequest
     public function attributes()
     {
         return [
-            'avatar' => 'imagen del producto'
+            'codigo' => 'código',
+            'avatar' => 'imagen del producto',
+            'descripcion' => 'descripción'
         ];
     }
 }

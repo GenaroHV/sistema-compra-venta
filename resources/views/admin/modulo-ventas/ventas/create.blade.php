@@ -21,7 +21,7 @@
             <form role="form" action="{{ route('admin.ventas.store') }}" method="POST">
               @csrf @method('POST')
               <div class="card-body row">
-                <div class="form-group col-12 col-md-12">
+                <div class="form-group col-12 col-md-8">
                   <label for="cliente_id">Clientes</label>
                   <select name="cliente_id" class="form-control js-example-basic-single">
                     <option value="" disabled selected hidden>Seleccione un cliente</option>
@@ -41,18 +41,30 @@
                 </div>
                 <div class="form-group col-12 col-md-4">
                     <label for="serie_comprobante">Serie de comprobante</label>
-                    <input type="text" class="form-control" name="serie_comprobante" placeholder="Ingresar serie">
+                    @if (count($venta) < 1)
+                      <input readonly value="{{ str_pad(($venta->last()->id ?? 1), 6, "0", STR_PAD_LEFT)  }}" type="text" class="form-control" name="serie_comprobante" placeholder="Ingresar serie">  
+                    @else                                                        
+                      <input readonly value="{{ str_pad(($venta->last()->id + 1 ?? 1), 6, "0", STR_PAD_LEFT)  }}" type="text" class="form-control" name="serie_comprobante" placeholder="Ingresar serie">                                   
+                    @endif
                 </div>
                 <div class="form-group col-12 col-md-4">
                     <label for="numero_comprobante">Número de comprobante</label>
                     <input type="text" class="form-control" name="numero_comprobante" placeholder="Ingresar número">
+                </div>
+                <div class="form-group col-12 col-md-2">
+                  <label for="impuesto">Impuesto %</label>
+                  <input id="impuesto" type="text" class="form-control" name="impuesto" value="18">
+                </div>
+                <div class="form-group col-12 col-md-2">
+                  <label for="fecha_hora">Fecha</label>
+                  <input type="date" class="form-control" name="fecha_hora" placeholder="00">
                 </div>
                 <div class="card container-fluid bg-light border border-secondary">
                   <div class="card-body row">
                     <div class="form-group col-12 col-md-4">
                       <label for="producto_id">Producto</label>
                       <select name="for_producto_id" id="for_producto_id" class="form-control js-example-basic-single">
-                        <option value="" disabled selected hidden>Seleccione un producto</option>
+                        <option id="oculto" value="" disabled selected hidden>Seleccione un producto</option>
                           @foreach ($productos as $producto)
                               <option value="{{$producto->id}}_{{$producto->stock}}_{{$producto->precio}}">{{ $producto->producto}}</option>
                           @endforeach                              
@@ -72,7 +84,7 @@
                     </div>
                     <div class="form-group col-12 col-md-2">
                       <br>
-                      <input type="button" class="btn btn-info mt-2" id="btn_add" value="Agregar">
+                      <input type="button" class="btn btn-info btn-block mt-2" id="btn_add" value="Agregar">
                     </div>
 
                     <div class="form-group col-12">
@@ -93,7 +105,7 @@
                                 <th class="py-0"><p class="mb-0" align="right"><span id="total">S/. 0.00</span> </p></th>
                             </tr>      
                             <tr>
-                                <th colspan="4" class="py-0"><p class="mb-0" align="right">IGV (18%):</p></th>
+                                <th colspan="4" class="py-0"><p class="mb-0" align="right">IGV:</p></th>
                                 <th class="py-0"><p class="mb-0" align="right"><span id="total_impuesto">S/. 0.00</span></p></th>
                             </tr>      
                             <tr>
@@ -161,6 +173,7 @@
       });
       $('#btn_add').click(function(){
         agregar();
+        
       });
     });
 
@@ -182,18 +195,18 @@
       cantidad = $("#for_cantidad").val();
       precio = $("#for_precio").val();
       stock = $("#for_stock").val();
-      impuesto = 0.18;
+      impuesto = $("#impuesto").val();
+      
 
       if( producto_id != "" && cantidad != "" && cantidad>0 && precio != ""){
           if (parseInt(stock)>=parseInt(cantidad)) {
               subtotal[cont] = (cantidad*precio);
               total = total + subtotal[cont];
 
-              var fila = '<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn btn-warning rounded-circle" onclick="eliminar('+cont+');"><i class="fas fa-times"></i></button></td><td><input type="hidden" name="producto_id[]" value="'+producto_id+'">'+producto+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio[]" value="'+parseFloat(precio).toFixed(2)+'"></td><td>S/.'+parseFloat(subtotal[cont]).toFixed(2)+'</td></tr>';
+              var fila = '<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn btn-sm btn-warning rounded-circle" onclick="eliminar('+cont+');"><i class="fas fa-times"></i></button></td><td><input type="hidden" name="producto_id[]" value="'+producto_id+'"><p class="pt-2 pb-0">'+producto+'</p></td><td><input class="form-control" readonly type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input class="form-control" readonly type="number" name="precio[]" value="'+parseFloat(precio).toFixed(2)+'"></td><td>S/.'+parseFloat(subtotal[cont]).toFixed(2)+'</td></tr>';
               cont++;
               limpiar();
               totales();
-              // $("#total").html("S/. " + total);
               evaluar();
               $("#detalles").append(fila);
           }else{
@@ -209,19 +222,21 @@
         })
       }
     }
-
     function limpiar(){
       $("#for_cantidad").val("");
       $("#for_precio").val("");
+      $("#for_stock").val("");
+      
     }
     function totales(){
       $("#total").html("S/. " + total.toFixed(2));
-      total_impuesto=total*impuesto;
+      total_impuesto=total * (impuesto/100);
       total_pagar=total+total_impuesto;
       $("#total_impuesto").html("S/. " + total_impuesto.toFixed(2));
       $("#total_pagar_html").html("S/. " + total_pagar.toFixed(2));
       $("#total_pagar").val(total_pagar.toFixed(2));
     }
+    
     function evaluar(){
       if (total > 0) {
         $("#guardar").show();
@@ -231,7 +246,7 @@
     }
     function eliminar(index){
       total = total - subtotal[index];
-      total_impuesto= total*0.18;
+      total_impuesto= total* (impuesto/100);
       total_pagar_html = total + total_impuesto;
 
       $("#total").html("S/." + total);

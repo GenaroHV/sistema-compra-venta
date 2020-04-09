@@ -31,6 +31,7 @@ class VentaController extends Controller
     public function create(){
         $tipo_comprobante = ['BOLETA', 'FACTURA', 'TICKET'];
         $this->authorize('create', new Venta);
+        $venta = Venta::all();
         $clientes = Cliente::all();
         $productos = DB::table('products as p')
         ->join('detalle_compras as dc', 'p.id', '=', 'dc.producto_id')
@@ -38,7 +39,7 @@ class VentaController extends Controller
         ->where('p.stock', '>', '0')
         ->groupBy('producto', 'p.id', 'p.stock')
         ->get();
-        return view('admin.modulo-ventas.ventas.create', compact('clientes', 'productos', 'tipo_comprobante'));
+        return view('admin.modulo-ventas.ventas.create', compact('clientes', 'productos', 'tipo_comprobante','venta'));
     }
 
     public function store(VentaFormRequest $request){
@@ -48,11 +49,12 @@ class VentaController extends Controller
             $venta = new Venta;
             $venta->cliente_id = $request->get('cliente_id');
             $venta->user_id = \Auth::user()->id;
-            $venta->tipo_comprobante = $request->get('tipo_comprobante');
+            $venta->tipo_comprobante = $request->get('tipo_comprobante');        
             $venta->serie_comprobante = $request->get('serie_comprobante');
             $venta->numero_comprobante = $request->get('numero_comprobante');
-            $venta->fecha_hora = Carbon::now()->toDateTimeString();
-            $venta->impuesto = '0.18';
+            $venta->fecha_hora = Carbon::parse($request->get('fecha_hora'));
+            #$venta->fecha_hora = Carbon::now()->toDateTimeString();
+            $venta->impuesto = $request->get('impuesto');
             $venta->total = $request->get('total_pagar');
             $venta->estado = 'Registrado';
             $venta->save();

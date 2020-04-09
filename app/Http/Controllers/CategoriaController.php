@@ -5,18 +5,17 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoriaFormRequest;
+use App\Exports\CategoriasExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class CategoriaController extends Controller
 {
     public function index(){
         $categorias = Category::allowed()->get();
-        return view('admin.modulo-almacen.categorias.index', compact('categorias'));
-    }
-
-    public function create(){
-        $this->authorize('create', new Category);
-        return view('admin.modulo-almacen.categorias.create');
-    }
+        $model = new Category;
+        return view('admin.modulo-almacen.categorias.index', compact('categorias', 'model'));
+    }    
 
     public function store(CategoriaFormRequest $request){
         $this->authorize('create', new Category);
@@ -24,14 +23,7 @@ class CategoriaController extends Controller
         $categoria->nombre = $request->get('nombre');
         $categoria->descripcion = $request->get('descripcion');
         $categoria->save();
-
         return redirect()->route('admin.categorias.index')->with('flash', 'Categoria creada con éxito');
-    }
-
-    public function edit($id){        
-        $categoria = Category::findOrFail($id);
-        $this->authorize('update', $categoria);
-        return view('admin.modulo-almacen.categorias.edit', compact('categoria'));
     }
 
     public function update(CategoriaFormRequest $request, $id){
@@ -40,7 +32,6 @@ class CategoriaController extends Controller
         $categoria->nombre = $request->get('nombre');
         $categoria->descripcion = $request->get('descripcion');
         $categoria->save();
-
         return redirect()->route('admin.categorias.index')->with('flash', 'Categoria actualizada con éxito');
     }
 
@@ -49,5 +40,15 @@ class CategoriaController extends Controller
         $this->authorize('delete', $categoria);
         $categoria->delete();
         return redirect()->route('admin.categorias.index')->with('flash', 'Categoria eliminada con éxito');
+    }
+
+    public function excel(){
+        return Excel::download(new CategoriasExport, 'Reporte de Categorías.xlsx');
+    }
+
+    public function pdf(){
+        $categorias = Category::all();
+        $pdf = PDF::loadView('admin.modulo-almacen.categorias.pdf', compact('categorias'));
+        return $pdf->download("Reporte de categorias.pdf");
     }
 }

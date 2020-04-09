@@ -21,6 +21,11 @@ class UsersTableSeeder extends Seeder
         $administradorRole = Role::create(["name" => "Administrador"]);
         $vendedordorRole = Role::create(["name" => "Vendedor"]);
 
+        $verUsuarioPermission = Permission::create(['name' => 'Ver Usuario']);
+        $crearUsuarioPermission = Permission::create(['name' => 'Crear Usuario']);
+        $editarUsuarioPermission = Permission::create(['name' => 'Editar Usuario']);
+        $eliminarUsuarioPermission = Permission::create(['name' => 'Eliminar Usuario']);
+
         $verCategoriaPermission = Permission::create(['name' => 'Ver Categoria']);
         $crearCategoriaPermission = Permission::create(['name' => 'Crear Categoria']);
         $editarCategoriaPermission = Permission::create(['name' => 'Editar Categoria']);

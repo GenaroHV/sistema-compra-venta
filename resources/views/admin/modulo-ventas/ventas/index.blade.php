@@ -133,7 +133,7 @@
                       "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                   }
               },
-              "order": [[ 0, "desc" ]]
+              "order": [[ 4, "desc" ]]
           });      
           $('button#deleteButton').on('click', function(e){
             e.preventDefault();

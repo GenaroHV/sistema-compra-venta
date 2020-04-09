@@ -183,6 +183,7 @@
       $("#for_cantidad").val("");
       $("#for_precio").val("");
     }
+
     function totales(){
       $("#total").html("S/. " + total.toFixed(2));
       total_impuesto=total*impuesto;
@@ -200,7 +201,7 @@
     }
     function eliminar(index){
       total = total - subtotal[index];
-      total_impuesto= total*0.18;
+      total_impuesto= total* impuesto;
       total_pagar_html = total + total_impuesto;
 
       $("#total").html("S/." + total);

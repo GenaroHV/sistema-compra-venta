@@ -14,9 +14,10 @@ class ClienteController extends Controller
     }
 
     public function create(){
-        $tipo_documento = ['DNI', 'RUC', 'PASS'];
+        #$tipo_documento = ['DNI', 'RUC', 'PASS'];
         $this->authorize('create', new Cliente);
-        return view('admin.modulo-ventas.clientes.create', compact('tipo_documento'));
+        #return view('admin.modulo-ventas.clientes.create', compact('tipo_documento'));
+        return view('admin.modulo-ventas.clientes.create');
     }
 
     public function store(ClienteFormRequest $request){

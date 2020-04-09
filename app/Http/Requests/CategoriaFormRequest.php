@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class CategoriaFormRequest extends FormRequest
 {
     /**
@@ -24,8 +24,13 @@ class CategoriaFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre'   => 'required',
-            'descripcion' => 'required'
+            'nombre' => [
+                'required',
+                'string',
+                'min:4',
+                Rule::unique('categories')->ignore($this->route('categoria'))
+            ],
+            'descripcion' => 'nullable'
         ];
     }
     public function messages()
@@ -38,7 +43,7 @@ class CategoriaFormRequest extends FormRequest
     public function attributes()
     {
         return [
-            //
+            'descripción' => 'descripción'
         ];
     }
 }

@@ -26,4 +26,9 @@ class VentaPolicy
     {
         return $user->hasPermissionTo('Crear Venta');
     }
+
+    public function delete(User $user, Venta $venta)
+    {
+        return $user->id === $venta->user_id || $user->hasPermissionTo('Eliminar Venta');
+    }
 }

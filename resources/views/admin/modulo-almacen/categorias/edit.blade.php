@@ -1,40 +1,43 @@
-@extends('layouts.app')
-@section('titulo', 'Actualizar Categoría')
-@section('content')
-<div class="content-wrapper">
-
-  <section class="content pt-4">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 ml-auto mr-auto">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Actualizar Categoría</h3>
-            </div>
-
-            <form role="form" action="{{ route('admin.categorias.update', $categoria->id) }}" method="POST">
-              @csrf @method('PUT')
-              <div class="card-body">
-                <div class="form-group">
-                  <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" name="nombre" value="{{ old('nombre', $categoria->nombre )}}">
-                </div>
-                <div class="form-group">
-                  <label for="descripcion">Descripción</label>
-                  <textarea name="descripcion" rows="6" class="form-control">{{ old('nombre', $categoria->descripcion )}}</textarea>
-                </div>
-              </div>
-              <div class="card-footer text-right">
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-              </div>
-            </form>
-
-          </div>
-        </div>
-        @include('admin.partials.regresar2')
+@foreach($categorias as $categoria)
+<div class="modal fade" id="actualizarCategoriaModal{{ $categoria->id }}" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar Categoría</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </div>
-  </section>
 
+      <form role="form" action="{{ route('admin.categorias.update', $categoria->id) }}" method="POST">
+        @method('PUT')
+        @csrf
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input id="categoria-nombre" type="text"
+              class="form-control {{ $errors->has('nombre') ? "is-invalid" : ''}}" name="nombre"
+              value="{{ old('nombre', $categoria->nombre )}}" required>
+            {!! $errors->first('nombre', '<span class="error invalid-feedback">:message</span>') !!}
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea name="descripcion" rows="6"
+              class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : ''}}">{{ old('nombre', $categoria->descripcion )}}</textarea>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary">Actualizar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
 </div>
-@stop
+
+@endforeach

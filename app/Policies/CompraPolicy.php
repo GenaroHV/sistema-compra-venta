@@ -26,4 +26,9 @@ class CompraPolicy
     {
         return $user->hasPermissionTo('Crear Compra');
     }
+
+    public function delete(User $user, Compra $compra)
+    {
+        return $user->id === $compra->user_id || $user->hasPermissionTo('Eliminar Compra');
+    }
 }

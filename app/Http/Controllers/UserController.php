@@ -12,14 +12,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::allowed()->get();
         return view('admin.modulo-admin.usuarios.index', compact('users'));
     }
 
     public function create()
     {
-        $this->authorize('create', new User);
         $user = new User;
+        $this->authorize('create', new User);
+        #$user = new User;
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
         return view('admin.modulo-admin.usuarios.create', compact('user', 'roles', 'permissions'));
@@ -50,16 +51,17 @@ class UserController extends Controller
        return redirect()->route('admin.users.index')->withFlash('Usuario creado con éxito');
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::findOrFail($id);
+        $this->authorize('view', $user);
+        #$user = User::findOrFail($id);
         return view('admin.modulo-admin.usuarios.show', compact('user'));
     }
 
-    public function edit($id)
-    {        
-        $user = User::findOrFail($id);
-        #$this->authorize('update', $user);      
+    public function edit(User $user)
+    {    
+        $this->authorize('update', $user); 
+        $user = User::findOrFail($id);             
         $roles = Role::with('permissions')->get();
         $permissions = Permission::pluck('name', 'id');
         
@@ -69,7 +71,7 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        #$this->authorize('update', $user);
+        $this->authorize('update', $user);
         if($request->file('avatar') !== null){
             $user->avatar = optional($request->file('avatar'))->store('avatars','public');
         }

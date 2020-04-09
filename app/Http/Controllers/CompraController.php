@@ -93,8 +93,8 @@ class CompraController extends Controller
         return redirect()->route('admin.compras.index')->with('flash', 'Compra creado con éxito');
     }
     
-    public function show(Compra $compra, $id){
-        $this->authorize('view', $compra);
+    public function show(Request $request, $id){
+        #$this->authorize('view', $compra);
         $compra = DB::table('compras as c')
         ->join('proveedores as p', 'c.proveedor_id', '=', 'p.id')
         ->join('detalle_compras as dc', 'c.id', '=', 'dc.compra_id')

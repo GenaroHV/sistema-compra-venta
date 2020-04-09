@@ -10,7 +10,7 @@
                     <div class="card">
                       <div class="card-header py-1">
                         <h3 class="card-title pt-2 mb-0 pb-0">
-                          <b>LISTA DE CLIENTES</b>
+                          <b>LISTA DE CLIENTES</b>                          
                         </h3>                          
                         <div class="float-right">
                           <a href="{{ route('admin.clientes.create') }}" class="btn btn-primary rounded-circle" data-toggle="tooltip" data-placement="top" title="Crear cliente">

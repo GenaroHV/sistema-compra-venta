@@ -16,7 +16,7 @@ class CreateClientesTable extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre')->unique();        
-            $table->string('tipo_documento');
+            $table->enum('tipo_documento', ['DNI', 'RUC', 'PASS']);
             $table->string('numero_documento')->nullable();
             $table->string('direccion')->nullable();
             $table->string('telefono')->nullable();

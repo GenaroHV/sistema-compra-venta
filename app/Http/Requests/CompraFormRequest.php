@@ -27,7 +27,7 @@ class CompraFormRequest extends FormRequest
             'proveedor_id' => 'required',
             'tipo_comprobante' => 'required|string',
             'serie_comprobante' => 'required|numeric',
-            'numero_comprobante' => 'required|numeric',
+            #'numero_comprobante' => 'required|numeric',
             'fecha_hora' => 'date',
         ];
     }

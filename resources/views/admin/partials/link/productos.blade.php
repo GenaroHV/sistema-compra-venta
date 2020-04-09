@@ -8,7 +8,7 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('admin.productos.create') }}" class="nav-link {{ setActivarLink('admin/productos/create') }}">
+            <a href="{{ route('admin.productos.index', '#crear') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Crear</p>
             </a>

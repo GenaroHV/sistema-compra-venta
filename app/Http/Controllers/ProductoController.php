@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
-use App\Movement;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductoFormRequest;
 use Illuminate\Support\Facades\Redirect;
+use App\Exports\ProductosExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class ProductoController extends Controller
 {
     public function index(){
         $productos = Product::allowed()->get();
-        return view('admin.modulo-almacen.productos.index', compact('productos'));
+        $model = new Product;
+        $categorias = Category::all();
+        return view('admin.modulo-almacen.productos.index', compact('productos', 'model', 'categorias'));
     }
 
     public function show(Product $product, $id){
@@ -71,5 +75,15 @@ class ProductoController extends Controller
         $this->authorize('delete', $producto);
         $producto->delete();
         return redirect()->route('admin.productos.index')->with('flash', 'Producto eliminado con éxito');
+    }
+
+    public function excel(){
+        return Excel::download(new ProductosExport, 'Reporte de Productos.xlsx');
+    }
+
+    public function pdf(){
+        $productos = Product::all();
+        $pdf = PDF::loadView('admin.modulo-almacen.productos.pdf', compact('productos'));
+        return $pdf->download("Reporte de productos.pdf");
     }
 }

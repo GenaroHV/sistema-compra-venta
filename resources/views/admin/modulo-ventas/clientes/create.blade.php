@@ -23,8 +23,8 @@
                     <label for="tipo_documento">Tipo de documento</label>
                     <select name="tipo_documento" class="form-control">
                         <option value="" disabled selected hidden>Seleccione una opción</option>                        
-                        @foreach($tipo_documento as $item)
-                          <option value="{{ $item }}"> {{ strtoupper($item) }}</option>
+                        @foreach(config('enum.tipo_documento') as $item)
+                          <option value="{{ $item }}"> {{ $item }}</option>
                         @endforeach
                     </select>
                 </div>
