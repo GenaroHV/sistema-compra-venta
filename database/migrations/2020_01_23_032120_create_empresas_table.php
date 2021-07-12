@@ -16,8 +16,7 @@ class CreateEmpresasTable extends Migration
         Schema::create('empresas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('razon_social');
-            $table->string('rubro')->nullable();
-            $table->text('descripcion')->nullable();
+            $table->string('propietario');
             $table->string('ruc');
             $table->string('logo')->nullable();
             $table->string('telefono')->nullable();
@@ -25,8 +24,6 @@ class CreateEmpresasTable extends Migration
             $table->integer('igv')->default(18);
             $table->string('moneda')->default('S/. ');
             $table->string('direccion')->nullable();
-            $table->string('ciudad')->nullable();
-            $table->string('provincia')->nullable();
             $table->timestamps();
         });
     }

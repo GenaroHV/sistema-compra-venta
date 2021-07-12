@@ -1,9 +1,14 @@
 <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ url('/admin') }}" class="brand-link bg-primary">
-    <img src="{{ asset('img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">SAJHOM</span>
+      @if($varLogo)
+        <img src="/storage/{{ $varLogo }}" class="brand-image img-circle elevation-3"
+              alt="logo">
+      @else
+        <img src="https://via.placeholder.com/150" class="brand-image img-circle elevation-3"
+              alt="logo">
+      @endif
+      <span class="brand-text font-weight-light">{{ $varRazonSocial }}</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">

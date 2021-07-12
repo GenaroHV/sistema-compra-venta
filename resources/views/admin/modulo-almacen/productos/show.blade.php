@@ -1,89 +1,63 @@
-@extends('layouts.app')
-@section('titulo', 'Detalle de Producto')
-@section('content')
-<div class="content-wrapper">
+@foreach ($productos as $producto)
+<div class="modal fade" id="verProductoModal{{ $producto->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title" id="exampleModalLabel">Ver Prodcuto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-  <section class="content pt-4">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 ml-auto mr-auto">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Detalle de Producto</h3>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="codigo">Código</label>
+                <input disabled type="text" class="form-control" name="codigo" value="{{ old('codigo', $producto->codigo) }}">
+
+              </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <div class="d-flex justify-content-center mt-3">
-                            <svg id="barcode"></svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-between mx-4 px-4 py-2">
-                    <div class="col-12 col-md-4">
-                      <b>ID:</b>
-                    </div>
-                    <div class="col-12 col-md-4 text-right">
-                      {{ $producto->id }}
-                    </div>
-                </div>
-                <div class="row justify-content-between mx-4 px-4 py-2">
-                    <div class="col-12 col-md-4">
-                      <b>Nombre:</b>
-                    </div>
-                    <div class="col-12 col-md-4 text-right">
-                      {{ $producto->nombre }}
-                    </div>
-                </div>
-                <div class="row justify-content-between mx-4 px-4 py-2">
-                    <div class="col-12 col-md-4">
-                      <b>Descripción:</b>
-                    </div>
-                    <div class="col-12 col-md-4 text-right">
-                      {{ $producto->descripcion }}
-                    </div>
-                </div>
-                <div class="row justify-content-between mx-4 px-4 py-2">
-                    <div class="col-12 col-md-4">
-                      <b>Cantidad:</b>
-                    </div>
-                    <div class="col-12 col-md-4 text-right">
-                      {{ $producto->stock }}
-                    </div>
-                </div>
-                <div class="row justify-content-between mx-4 px-4 py-2">
-                    <div class="col-12 col-md-4">
-                      <b>Precio:</b>
-                    </div>
-                    <div class="col-12 col-md-4 text-right">
-                      {{ $producto->precio }}
-                    </div>
-                </div>
-                <div class="row justify-content-between mx-4 px-4 py-2">
-                    <div class="col-12 col-md-4">
-                      <b>Categoría:</b>
-                    </div>
-                    <div class="col-12 col-md-4 text-right">
-                        @foreach ( $producto->categorias as $categoria)
-                            {{ $categoria->nombre }}
-                        @endforeach
-                    </div>
-                </div>                
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input disabled type="text" class="form-control" name="nombre"
+                  value="{{ old('nombre', $producto->nombre )}}">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea disabled name="descripcion" rows="4"
+                  class="form-control">{{ old('descripcion', $producto->descripcion )}}</textarea>
+              </div>
+            </div>            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Categoria</label>
+                <select disabled name="categorias[]" class="form-control js-example-basic-single" required>
+                  <option value="" disabled selected hidden>Selecciona una categoria</option>
+                  @foreach ($categorias as $categoria)
+                  <option {{ collect(old('categorias', $producto->categorias->pluck('id')))->contains($categoria->id) ? 'selected' :'' }} value="{{ $categoria->id }}" placeholder="Seleccion">
+                    {{ $categoria->nombre }}
+                </option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="precio">Precio</label>
+                <input disabled required type="text" class="form-control" name="precio" value="{{ old('precio', $producto->precio )}}">
+              </div>
             </div>
           </div>
         </div>
-        @include('admin.partials.regresar2')
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">SALIR</button>
+        </div>
     </div>
-  </section>
-
+  </div>
 </div>
-@stop
-@push('js')
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-<script>
-    JsBarcode("#barcode", "{{ $producto->codigo }}", {
-        fontOptions: "bold"
-    });
-</script>
-@endpush()
+@endforeach

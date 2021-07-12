@@ -56,28 +56,28 @@
     </section>
 </div>
 @foreach ($productos as $producto)
-<!-- Modal -->
-@if($producto->avatar)
-<div class="modal fade" id="modalImagenProducto{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <img src="{{ asset('storage/' .$producto->avatar) }}" class="img-fluid">
-            </div>
-        </div>
-    </div>
-</div>
-@else
-<div class="modal fade" id="modalImagenProducto{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-body">
-              <img src="{{ asset('img/productos/default-product.png') }}" class="img-fluid">
+  <!-- Modal -->
+  @if($producto->avatar)
+  <div class="modal fade" id="modalImagenProducto{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-body">
+                  <img src="{{ asset('storage/' .$producto->avatar) }}" class="img-fluid">
+              </div>
           </div>
       </div>
   </div>
-</div>
-@endif
+  @else
+  <div class="modal fade" id="modalImagenProducto{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="{{ asset('img/productos/default-product.png') }}" class="img-fluid">
+            </div>
+        </div>
+    </div>
+  </div>
+  @endif
 @endforeach
 @stop
 
@@ -92,7 +92,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.17.6/dist/sweetalert2.all.min.js"></script>
   
 @include('admin.modulo-almacen.productos.create')
-{{-- @include('admin.modulo-almacen.categorias.edit')--}}
+@include('admin.modulo-almacen.productos.show')
+@include('admin.modulo-almacen.productos.edit')
+{{-- CREAR PRODUCTO --}}
 @unless(request()->is('admin/categorias/*'))
     <script>
       var errorForm = "{{ $errors->any() ? 'is-invalid' : ''}}";
@@ -112,6 +114,7 @@
       }); 
     </script>
 @endunless
+{{-- ACTUALIZAR PRODUCTO --}}
 @foreach ($productos as $producto)
     <script>
       if( window.location.hash === "#editar{{ $producto->id }}"){
@@ -123,6 +126,20 @@
       $('#actualizarProductoModal{{ $producto->id }}').on('shown.bs.modal', function(){
         $('#producto-nombre').focus();
         window.location.hash = "#editar{{ $producto->id }}";
+      });
+    </script>
+@endforeach
+{{-- VER PRODUCTO --}}
+@foreach ($productos as $verProducto)
+    <script>
+      if( window.location.hash === "#ver{{ $verProducto->id }}"){
+        $('#verProductoModal{{ $verProducto->id }}').modal('show');        
+      }
+      $('#verProductoModal{{ $verProducto->id }}').on('hide.bs.modal', function(){
+        window.location.hash = '#';
+      });
+      $('#verProductoModal{{ $verProducto->id }}').on('shown.bs.modal', function(){
+        window.location.hash = "#ver{{ $verProducto->id }}";
       });
     </script>
 @endforeach

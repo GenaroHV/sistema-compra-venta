@@ -18,7 +18,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ count($user) }}</h3>
+                        <h3 class="text-info">1</h3>
                         <p>Usuarios</p>
                     </div>
                     <div class="icon">
@@ -30,7 +30,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{ count($role) }}</h3>
+                        <h3 class="text-success">1</h3>
                         <p>Roles</p>
                     </div>
                     <div class="icon">
@@ -43,7 +43,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner text-white">
-                        <h3>{{ count($permission) }}</h3>
+                        <h3 class="text-warning">1</h3>
                         <p>Permisos</p>
                     </div>
                     <div class="icon">
@@ -56,7 +56,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-dark">
                     <div class="inner text-white">
-                        <h3>1</h3>
+                        <h3 class="text-dark">1</h3>
                         <p>Configurar</p>
                     </div>
                     <div class="icon">

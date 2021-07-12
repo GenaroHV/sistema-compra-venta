@@ -20,12 +20,12 @@ class CompraController extends Controller
         $compra = Compra::allowed()->get();
         $compras = Compra::join('proveedores', 'compras.proveedor_id', '=', 'proveedores.id')
         ->join('users', 'compras.user_id', '=', 'users.id')
-        ->select('compras.id', 'compras.tipo_comprobante', 'compras.serie_comprobante', 
-                'compras.numero_comprobante', 'compras.fecha_hora', 'compras.impuesto', 
+        ->select('compras.id', 'compras.tipo_comprobante', 'compras.serie_comprobante',
+                'compras.numero_comprobante', 'compras.fecha_hora', 'compras.impuesto',
                 'compras.total', 'compras.estado', 'proveedores.nombre as proveedor', 'users.name')
         ->get();
         return view('admin.modulo-compras.compras.index', compact('compras','compra'));
-    } 
+    }
 
     public function create(){
         $tipo_comprobante = ['BOLETA', 'FACTURA', 'TICKET'];
@@ -57,14 +57,14 @@ class CompraController extends Controller
             $precio=$request->get('precio');
 
             $cont=0;
-     
+
             while($cont < count($producto_id)){
 
                 $detalle = new DetalleCompra();
                 $detalle->compra_id = $compra->id;
                 $detalle->producto_id = $producto_id[$cont];
                 $detalle->cantidad = $cantidad[$cont];
-                $detalle->precio = $precio[$cont];    
+                $detalle->precio = $precio[$cont];
                 $detalle->save();
                 $cont=$cont+1;
             }
@@ -92,26 +92,26 @@ class CompraController extends Controller
         }
         return redirect()->route('admin.compras.index')->with('flash', 'Compra creado con éxito');
     }
-    
+
     public function show(Request $request, $id){
         #$this->authorize('view', $compra);
         $compra = DB::table('compras as c')
         ->join('proveedores as p', 'c.proveedor_id', '=', 'p.id')
         ->join('detalle_compras as dc', 'c.id', '=', 'dc.compra_id')
-        ->select('c.id', 'c.fecha_hora', 'p.nombre', 'c.tipo_comprobante', 
-            'c.serie_comprobante', 'c.numero_comprobante', 'c.impuesto', 'c.estado', 
+        ->select('c.id', 'c.fecha_hora', 'p.nombre', 'c.tipo_comprobante',
+            'c.serie_comprobante', 'c.numero_comprobante', 'c.impuesto', 'c.estado',
             DB::raw('sum(dc.cantidad*precio) as total'))
         ->where('c.id', '=', $id)
         ->groupBy('c.id', 'c.tipo_comprobante', 'c.numero_comprobante',
             'c.fecha_hora', 'c.impuesto', 'c.estado','p.nombre')
         ->first();
-        
+
         $detalles = DB::table('detalle_compras as d')
         ->join('products as p', 'd.producto_id', '=', 'p.id')
         ->select('p.nombre as producto', 'd.cantidad', 'd.precio')
         ->where('d.compra_id', '=', $id)
         ->get();
-        
+
         return view('admin.modulo-compras.compras.show',['compra' => $compra,'detalles' =>$detalles]);
     }
 
@@ -120,20 +120,20 @@ class CompraController extends Controller
         $compra = DB::table('compras as c')
         ->join('proveedores as p', 'c.proveedor_id', '=', 'p.id')
         ->join('detalle_compras as dc', 'c.id', '=', 'dc.compra_id')
-        ->select('c.id', 'c.fecha_hora', 'p.nombre', 'c.tipo_comprobante', 
-            'c.serie_comprobante', 'c.numero_comprobante', 'c.impuesto', 'c.estado', 
+        ->select('c.id', 'c.fecha_hora', 'p.nombre', 'c.tipo_comprobante',
+            'c.serie_comprobante', 'c.numero_comprobante', 'c.impuesto', 'c.estado',
             DB::raw('sum(dc.cantidad*precio) as total'))
         ->where('c.id', '=', $id)
         ->groupBy('c.id', 'c.tipo_comprobante', 'c.numero_comprobante',
             'c.fecha_hora', 'c.impuesto', 'c.estado','p.nombre')
         ->first();
-        
+
         $detalles = DB::table('detalle_compras as d')
         ->join('products as p', 'd.producto_id', '=', 'p.id')
         ->select('p.nombre as producto', 'd.cantidad', 'd.precio')
         ->where('d.compra_id', '=', $id)
         ->get();
-        
+
         return view('admin.modulo-compras.compras.print',['compra' => $compra,'detalles' =>$detalles]);
     }
 
@@ -142,22 +142,22 @@ class CompraController extends Controller
         $this->authorize('delete', $compra);
         $compra->estado = 'Anulado';
         $compra->save();
-    
+
         return redirect()->route('admin.compras.index')->with('flash', 'Compra anulada con éxito');
     }
 
     public function exportPdf(Compra $compra, $id){
-        $this->authorize('view', $compra);       
+        $this->authorize('view', $compra);
         $compra = DB::table('compras as c')
         ->join('proveedores as p', 'c.proveedor_id', '=', 'p.id')
         ->join('detalle_compras as dc', 'c.id', '=', 'dc.compra_id')
-        ->select('c.id', 'c.fecha_hora', 'p.nombre', 'c.tipo_comprobante', 
-            'c.serie_comprobante', 'c.numero_comprobante', 'c.impuesto', 'c.estado', 
+        ->select('c.id', 'c.fecha_hora', 'p.nombre', 'c.tipo_comprobante',
+            'c.serie_comprobante', 'c.numero_comprobante', 'c.impuesto', 'c.estado',
             DB::raw('sum(dc.cantidad*precio) as total'))
         ->where('c.id', '=', $id)
         ->groupBy('c.id', 'c.tipo_comprobante', 'c.numero_comprobante',
             'c.fecha_hora', 'c.impuesto', 'c.estado','p.nombre')
-        ->first();        
+        ->first();
         $detalles = DB::table('detalle_compras as d')
         ->join('products as p', 'd.producto_id', '=', 'p.id')
         ->select('p.nombre as producto', 'd.cantidad', 'd.precio')

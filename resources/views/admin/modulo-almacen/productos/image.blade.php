@@ -4,6 +4,6 @@
     </a>
 @else
     <a href="" data-toggle="modal" data-target="#modalImagenProducto{{ $model->id }}">
-        <img src="{{ asset("storage/img/productos/default-product.png") }}" class="img-fluid" width="60px" height="60px">
+        <img src="{{ asset("img/productos/default-product.png") }}" class="img-fluid" width="60px" height="60px">
     </a>
 @endif

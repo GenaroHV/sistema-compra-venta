@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Empresa extends Model
 {
-    protected $table = 'empresas';
+    public $table = 'empresas';
     protected $fillable = [
         'razon_social',
-        'rubro',
-        'descripcion',
+        'propietario',
         'ruc',
         'logo',
         'telefono',
@@ -18,7 +17,5 @@ class Empresa extends Model
         'igv',
         'moneda',
         'direccion',
-        'ciudad',
-        'provincia',
     ];
 }

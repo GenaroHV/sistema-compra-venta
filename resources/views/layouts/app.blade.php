@@ -7,7 +7,8 @@
     <meta name="userId" content="{{ Auth::check() ? Auth::user()->id : ''}}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }} | @yield('titulo')</title>    
+    <title>{{ $varRazonSocial }} | @yield('titulo')</title>
+    <link rel="icon" type="image/png" href="http://genarohernandez.test/assets/web/img/icon.png">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

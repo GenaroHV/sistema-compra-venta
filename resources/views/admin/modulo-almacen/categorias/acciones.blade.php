@@ -7,6 +7,7 @@
         <i class="fas fa-pencil-alt fa-sm"></i>
     </a>
 @endif
+
 @if(auth()->user()->hasRole('Administrador') || auth()->user()->can('Eliminar Categoria'))
 
     <form action="{{ route('admin.categorias.destroy', $model) }}" method="POST" style="display: inline">

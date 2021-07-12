@@ -16,3 +16,6 @@
 .custom-file-input ~ .custom-file-label::after {
     content: "Navegar";
 }
+.brand-link {
+    font-size: 16px !important
+}

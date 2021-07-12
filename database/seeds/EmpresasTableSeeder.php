@@ -15,13 +15,10 @@ class EmpresasTableSeeder extends Seeder
         Empresa::truncate();
         $empresa = new Empresa;
         $empresa->razon_social = 'Aprendamos Juntos S.A.';
-        $empresa->rubro = 'Clases online';
-        $empresa->ruc = '1048054905';
+        $empresa->propietario = 'Juan Perez';
+        $empresa->ruc = '10480549053';
         $empresa->telefono = '999999999';
         $empresa->email = 'aprendamos@juntos.com';
-        $empresa->direccion = 'San Vicente';
-        $empresa->ciudad = 'Lima';
-        $empresa->provincia = 'Cañete';
         $empresa->save();
     }
 }

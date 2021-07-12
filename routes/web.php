@@ -28,7 +28,7 @@ Route::group([
         Route::get('/', 'AdminController@index');
         Route::get('configurar', 'AdminController@configurar')->name('configurar');
         // Empresa
-        Route::resource('empresa', 'EmpresaController');
+        Route::resource('empresa', 'EmpresaController')->only(['index', 'update']);
         // Usuarios
         Route::resource('users', 'UserController');
         // Roles
@@ -39,7 +39,7 @@ Route::group([
         Route::middleware('role:Administrador')->put('users/{user}/roles', 'UsersRolesController@update')->name('users.roles.update');
         Route::middleware('role:Administrador')->put('users/{user}/permissions', 'UsersPermissionsController@update')->name('users.permissions.update');
         // Categorias y Productos
-        Route::resource('categorias', 'CategoriaController')->except(['show', 'edit', 'create']);
+        Route::resource('categorias', 'CategoriaController')->except(['show']);
         Route::get('categorias/excel', 'CategoriaController@excel')->name('categorias.excel');
         Route::get('categorias/pdf', 'CategoriaController@pdf')->name('categorias.pdf');
         Route::resource('productos', 'ProductoController')->except(['show', 'edit', 'create']);

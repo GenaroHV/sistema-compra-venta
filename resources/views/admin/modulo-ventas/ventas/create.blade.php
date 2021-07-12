@@ -203,7 +203,7 @@
               subtotal[cont] = (cantidad*precio);
               total = total + subtotal[cont];
 
-              var fila = '<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn btn-sm btn-warning rounded-circle" onclick="eliminar('+cont+');"><i class="fas fa-times"></i></button></td><td><input type="hidden" name="producto_id[]" value="'+producto_id+'"><p class="pt-2 pb-0">'+producto+'</p></td><td><input class="form-control" readonly type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input class="form-control" readonly type="number" name="precio[]" value="'+parseFloat(precio).toFixed(2)+'"></td><td>S/.'+parseFloat(subtotal[cont]).toFixed(2)+'</td></tr>';
+              var fila = '<tr class="selected" id="fila' +cont+'"><td><button type="button" class="btn btn-sm btn-warning rounded-circle" onclick="eliminar('+cont+');" style="padding-right:6px; padding-left:6px; padding-top:0px;padding-bottom:0px;"><i class="fas fa-times"></i></button></td><td><input type="hidden" name="producto_id[]" value="'+producto_id+'"><p class="pt-2 pb-0">'+producto+'</p></td><td><input class="form-control" readonly type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input class="form-control" readonly type="number" name="precio[]" value="'+parseFloat(precio).toFixed(2)+'"></td><td>S/.'+parseFloat(subtotal[cont]).toFixed(2)+'</td></tr>';
               cont++;
               limpiar();
               totales();
